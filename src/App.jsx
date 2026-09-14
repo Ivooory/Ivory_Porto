@@ -1,122 +1,100 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const containerRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  // 1. BLOK PERTAMA (0% - 25%)
+  const firstBlockOpacity = useTransform(scrollYProgress, [0, 0.25, 0.26, 1], [1, 0, 0, 0]);
+  const firstBlockY = useTransform(scrollYProgress, [0, 0.25], [0, -30]);
+  const firstBlockPointer = useTransform(scrollYProgress, [0, 0.25, 0.26, 1], ['auto', 'auto', 'none', 'none']);
+
+  // 2. BLOK KEDUA (30% - 60%)
+  const secondBlockOpacity = useTransform(scrollYProgress, [0.25, 0.35, 0.55, 0.65, 0.66, 1], [0, 1, 1, 0, 0, 0]);
+  const secondBlockY = useTransform(scrollYProgress, [0.25, 0.35, 0.55, 0.65], [30, 0, 0, -30]);
+  const secondBlockPointer = useTransform(scrollYProgress, [0, 0.65, 0.66, 1], ['auto', 'auto', 'none', 'none']);
+
+  // 3. BLOK KETIGA (65% - 100%)
+  const thirdBlockOpacity = useTransform(scrollYProgress, [0.65, 0.8, 1], [0, 1, 1]);
+  const thirdBlockY = useTransform(scrollYProgress, [0.65, 0.8], [30, 0]);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div ref={containerRef} className="h-[350vh] bg-white text-slate-900 relative">
+      
+      {/* Container dikunci di tengah layar */}
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center p-4 sm:p-6 text-center overflow-hidden">
+        
+        <div className="grid place-items-center max-w-4xl w-full px-2">
+          
+          {/* TAHAP 1: Hello, World! I'm Ivory Iverson */}
+          <motion.div 
+            style={{ 
+              opacity: firstBlockOpacity, 
+              y: firstBlockY,
+              pointerEvents: firstBlockPointer
+            }}
+            className="col-start-1 row-start-1 flex flex-col items-center space-y-2 sm:space-y-4 w-full"
+          >
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-black">
+              Hello, World!
+            </h2>
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-center">
+              <span className="text-2xl sm:text-4xl md:text-5xl text-black">
+                I'm 
+              </span>
+              <span> </span>
+              <span className="text-4xl sm:text-6xl md:text-7xl text-black block sm:inline mt-1 sm:mt-0">
+                Ivory Iverson
+              </span>
+            </h1>
+          </motion.div>
 
-      <div className="ticks"></div>
+          {/* TAHAP 2: I'm an Informatics student */}
+          <motion.div 
+            style={{ 
+              opacity: secondBlockOpacity, 
+              y: secondBlockY,
+              pointerEvents: secondBlockPointer
+            }}
+            className="col-start-1 row-start-1 flex items-center justify-center w-full"
+          >
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-center">
+              <span className="text-2xl sm:text-4xl md:text-5xl text-black">
+                I'm an
+              </span>
+              <span> </span>
+              <span className="text-4xl sm:text-6xl md:text-7xl text-black block sm:inline my-1 sm:my-0">
+                Informatics
+              </span>
+              <span> </span>
+              <span className="text-2xl sm:text-4xl md:text-5xl text-black">
+                student
+              </span>
+            </h1>
+          </motion.div>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+          {/* TAHAP 3: Explore My Work */}
+          <motion.div 
+            style={{ 
+              opacity: thirdBlockOpacity, 
+              y: thirdBlockY 
+            }}
+            className="col-start-1 row-start-1 flex flex-col items-center justify-center w-full"
+          >
+            <h1 className="text-3xl sm:text-3xl md:text-3xl font-extrabold tracking-tight text-black text-center">
+              Let's explore my work!
+            </h1>
+          </motion.div>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        </div>
+
+      </div>
+
+    </div>
+  );
 }
-
-export default App
