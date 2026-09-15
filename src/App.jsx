@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 // 1. IMPORT GAMBAR PENGALAMAN
 import keuskupan1 from './img/keuskupan-1.jpg';
@@ -15,7 +15,7 @@ import icare1 from './img/icare-1.jpg';
 import icare2 from './img/icare-2.jpg'; 
 import icare3 from './img/icare-3.jpg';
 
-// 2. IMPORT LOGO TECH & AI TOOLS (Sesuaikan nama file dan ekstensi di src/img/)
+// 2. IMPORT LOGO TECH & AI TOOLS
 import tailwindLogo from './img/tailwind.png';
 import pythonLogo from './img/python.png';
 import javaLogo from './img/java.png';
@@ -24,6 +24,55 @@ import bootstrapLogo from './img/bootstrap.png';
 import claudeLogo from './img/claude.png';
 import geminiLogo from './img/gemini.png';
 import gptLogo from './img/gpt.png';
+
+// KOMPONEN FLOATING NAVBAR (Desain Kotak Minimalis)
+function Navbar() {
+  const [showNavbar, setShowNavbar] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const vh = window.innerHeight;
+      // Muncul setelah melewati area Hero
+      if (window.scrollY > vh * 2.2) {
+        setShowNavbar(true);
+      } else {
+        setShowNavbar(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <nav
+      className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ease-out ${
+        showNavbar
+          ? 'opacity-100 translate-y-0 pointer-events-auto'
+          : 'opacity-0 -translate-y-4 pointer-events-none'
+      }`}
+    >
+      {/* Container Kotak Clean */}
+      <div className="flex items-center gap-6 px-6 py-2.5 bg-white/90 backdrop-blur-md border border-zinc-300 shadow-sm text-xs font-semibold uppercase tracking-wider text-zinc-600">
+        <a href="#about" className="hover:text-black transition-colors">
+          About
+        </a>
+        <span className="text-zinc-300">/</span>
+        <a href="#experiences" className="hover:text-black transition-colors">
+          Experiences
+        </a>
+        <span className="text-zinc-300">/</span>
+        <a href="#skills" className="hover:text-black transition-colors">
+          Skills
+        </a>
+        <span className="text-zinc-300">/</span>
+        <a href="#contact" className="hover:text-black transition-colors">
+          Contact
+        </a>
+      </div>
+    </nav>
+  );
+}
 
 // KOMPONEN CAROUSEL FOTO PENGALAMAN
 function ImageCarousel({ images }) {
@@ -45,7 +94,7 @@ function ImageCarousel({ images }) {
         {duplicatedImages.map((src, index) => (
           <div
             key={index}
-            className="w-48 sm:w-60 h-32 sm:h-36 flex-shrink-0 rounded-xl overflow-hidden border border-zinc-200 bg-zinc-100 shadow-sm"
+            className="w-48 sm:w-60 h-32 sm:h-36 flex-shrink-0 border border-zinc-200 bg-zinc-100 shadow-sm overflow-hidden"
           >
             <img
               src={src}
@@ -59,9 +108,8 @@ function ImageCarousel({ images }) {
   );
 }
 
-// KOMPONEN CAROUSEL KHUSUS LOGO TECH & AI (Ringkas dengan Nama)
+// KOMPONEN CAROUSEL KHUSUS LOGO TECH & AI
 function TechCarousel({ items, speed = 20 }) {
-  // Duplikasi items agar loop seamless
   const duplicatedItems = [...items, ...items, ...items];
 
   return (
@@ -80,7 +128,7 @@ function TechCarousel({ items, speed = 20 }) {
         {duplicatedItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center space-x-3 px-4 py-3 rounded-xl border border-zinc-200 bg-zinc-50/50 hover:bg-zinc-100 transition-colors shadow-sm flex-shrink-0"
+            className="flex items-center space-x-3 px-4 py-3 border border-zinc-200 bg-zinc-50/50 hover:bg-zinc-100 transition-colors shadow-sm flex-shrink-0"
           >
             <img
               src={item.icon}
@@ -140,7 +188,10 @@ export default function App() {
   return (
     <div className="bg-zinc-50 text-slate-900 min-h-screen relative font-sans">
       
-      {/* 1. PEMBUNGKUS BACKGROUND GRID (BERAKHIR SEBELUM FOOTER/CONTACT) */}
+      {/* FLOATING NAVBAR */}
+      <Navbar />
+
+      {/* 1. PEMBUNGKUS BACKGROUND GRID */}
       <div 
         style={{
           backgroundImage: `
@@ -165,7 +216,7 @@ export default function App() {
                 </h2>
                 <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-center">
                   <span className="text-2xl sm:text-4xl md:text-5xl text-black">I'm</span><span> </span>
-                  <span className="bg-blue-500 text-4xl sm:text-6xl md:text-7xl text-white block sm:inline mt-1 sm:mt-0">Ivory Iverson</span>
+                  <span className="bg-blue-500 text-4xl sm:text-6xl md:text-7xl text-white block sm:inline mt-1 sm:mt-0 px-2">Ivory Iverson</span>
                 </h1>
               </motion.div>
 
@@ -175,7 +226,7 @@ export default function App() {
               >
                 <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-center">
                   <span className="text-2xl sm:text-4xl md:text-5xl text-black">I'm an</span><span> </span>
-                  <span className="bg-blue-500 text-4xl sm:text-6xl md:text-7xl text-white block sm:inline my-1 sm:my-0">Informatics</span><span> </span>
+                  <span className="bg-blue-500 text-4xl sm:text-6xl md:text-7xl text-white block sm:inline my-1 sm:my-0 px-2">Informatics</span><span> </span>
                   <span className="text-2xl sm:text-4xl md:text-5xl text-black">student</span>
                 </h1>
               </motion.div>
@@ -184,7 +235,7 @@ export default function App() {
                 style={{ opacity: thirdBlockOpacity, y: thirdBlockY }}
                 className="col-start-1 row-start-1 flex flex-col items-center justify-center w-full"
               >
-                <h1 className="text-3xl bg-blue-500 sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white text-center">
+                <h1 className="text-3xl bg-blue-500 sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white text-center px-3 py-1">
                   Let's explore my work ! 
                 </h1>
               </motion.div>
@@ -194,9 +245,9 @@ export default function App() {
         </div>
 
         {/* SECTION 2: ABOUT ME */}
-        <section className="px-6 sm:px-12 md:px-16 pt-24 pb-16">
+        <section id="about" className="px-6 sm:px-12 md:px-16 pt-24 pb-16">
           <div className="max-w-3xl mx-auto flex flex-col items-start justify-start space-y-6 text-left">
-            <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white">
+            <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit px-3 py-1">
               About Me
             </h2>
             
@@ -225,16 +276,16 @@ export default function App() {
         </section>
 
         {/* SECTION 3: MY EXPERIENCES */}
-        <section className="px-6 sm:px-12 md:px-16 py-16 border-t border-zinc-200/60">
+        <section id="experiences" className="px-6 sm:px-12 md:px-16 py-16 border-t border-zinc-200/60">
           <div className="max-w-3xl mx-auto flex flex-col items-start space-y-10 text-left">
-            <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white">
+            <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit px-3 py-1">
               My Experiences
             </h2>
 
             {/* ITEM PENGALAMAN 1 */}
             <div className="flex flex-col space-y-4 w-full">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-1">
-                <h3 className="text-xl bg-blue-500 sm:text-2xl font-bold text-white">
+                <h3 className="text-xl bg-blue-500 sm:text-2xl font-bold text-white w-fit px-2 py-0.5">
                   Full-Stack Developer
                 </h3>
                 <span className="text-sm font-semibold text-zinc-500">
@@ -259,19 +310,19 @@ export default function App() {
               </ul>
 
               <div className="flex flex-wrap gap-2 pt-2">
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900 rounded-md">
+                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
                   Full-Stack Development
                 </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900 rounded-md">
+                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
                   Agile / Scrum
                 </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900 rounded-md">
+                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
                   Bootstrap
                 </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900 rounded-md">
+                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
                   Python
                 </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900 rounded-md">
+                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
                   XML
                 </span>
               </div>
@@ -282,7 +333,7 @@ export default function App() {
             {/* ITEM PENGALAMAN 2 */}
             <div className="flex flex-col space-y-4 w-full pt-8 border-t border-zinc-200/60">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-1">
-                <h3 className="text-xl sm:text-2xl bg-blue-500 font-bold text-white">
+                <h3 className="text-xl sm:text-2xl bg-blue-500 font-bold text-white w-fit px-2 py-0.5">
                   Head of Batch 49 (Ketua Angkatan)
                 </h3>
                 <span className="text-sm font-semibold text-zinc-500">
@@ -307,16 +358,16 @@ export default function App() {
               </ul>
 
               <div className="flex flex-wrap gap-2 pt-2">
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900 rounded-md">
+                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
                   Leadership
                 </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900 rounded-md">
+                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
                   Team Management
                 </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900 rounded-md">
+                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
                   Conflict Resolution
                 </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900 rounded-md">
+                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
                   Strategic Communication
                 </span>
               </div>
@@ -327,7 +378,7 @@ export default function App() {
             {/* ITEM PENGALAMAN 3 */}
             <div className="flex flex-col space-y-4 w-full pt-8 border-t border-zinc-200/60">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-1">
-                <h3 className="text-xl sm:text-2xl bg-blue-500 font-bold text-white">
+                <h3 className="text-xl sm:text-2xl bg-blue-500 font-bold text-white w-fit px-2 py-0.5">
                   Coding Mentor & Volunteer
                 </h3>
                 <span className="text-sm font-semibold text-zinc-500">
@@ -352,13 +403,13 @@ export default function App() {
               </ul>
 
               <div className="flex flex-wrap gap-2 pt-2">
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900 rounded-md">
+                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
                   Mentoring & Teaching
                 </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900 rounded-md">
+                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
                   Scratch
                 </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900 rounded-md">
+                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
                   Public Service / Volunteering
                 </span>
               </div>
@@ -369,12 +420,11 @@ export default function App() {
           </div>
         </section>
 
-        {/* 4. TECH STACK & AI TOOLS SECTION */}
-        {/* SESUDAH (SUDAH DIPERBAIKI) */}
-        <section className="px-6 sm:px-12 md:px-16 py-16 border-t border-zinc-200/60">
+        {/* SECTION 4: TECH STACK & AI TOOLS SECTION */}
+        <section id="skills" className="px-6 sm:px-12 md:px-16 py-16 border-t border-zinc-200/60">
           <div className="max-w-3xl mx-auto flex flex-col items-start space-y-8 text-left">
             <div>
-              <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit">
+              <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit px-3 py-1">
                 Skills & Tools
               </h2>
               <p className="text-zinc-500 text-sm sm:text-base mt-2">
@@ -384,14 +434,14 @@ export default function App() {
 
             <div className="w-full space-y-6 pt-2">
               <div className="space-y-3">
-                <span className="text-xs uppercase tracking-wider bg-blue-500 text-white font-bold">
+                <span className="text-xs uppercase tracking-wider bg-blue-500 text-white font-bold inline-block px-2 py-0.5">
                   Technologies & Languages
                 </span>
                 <TechCarousel items={techStack} speed={18} />
               </div>
 
               <div className="space-y-3 pt-1">
-                <span className="text-xs uppercase tracking-wider text-white bg-blue-500 font-bold">
+                <span className="text-xs uppercase tracking-wider text-white bg-blue-500 font-bold inline-block px-2 py-0.5">
                   Daily AI Productivity Tools
                 </span>
                 <TechCarousel items={aiTools} speed={14} />
@@ -403,9 +453,8 @@ export default function App() {
       </div> 
       {/* KHUSUS PENUTUP PEMBUNGKUS GRID BACKGROUND */}
 
-
-      {/* 2. FOOTER / CONTACT SECTION (BERSIH TANPA GRID) */}
-      <footer className="px-6 sm:px-12 md:px-16 py-20 bg-zinc-50 border-t border-zinc-200/60">
+      {/* FOOTER / CONTACT SECTION */}
+      <footer id="contact" className="px-6 sm:px-12 md:px-16 py-20 bg-zinc-50 border-t border-zinc-200/60">
         <div className="max-w-3xl mx-auto flex flex-col items-start space-y-6 text-left">
           
           <span className="text-xs uppercase tracking-widest text-zinc-400 font-semibold">
