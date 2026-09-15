@@ -206,7 +206,7 @@ export default function App() {
                 <span className="text-xl sm:text-2xl font-bold text-black">
                   Ivory Iverson
                 </span>
-                , a 21-year-old Informatics student at Parahyangan Catholic University (UNPAR) with a deep interest in{" "}
+                , a 21-year-old Informatics student at Parahyangan Catholic University (UNPAR), based in Bandung with a deep interest in{" "}
                 <span className="text-lg font-bold text-black">
                   Artificial Intelligence and Machine Learning
                 </span>
@@ -370,12 +370,13 @@ export default function App() {
         </section>
 
         {/* 4. TECH STACK & AI TOOLS SECTION */}
+        {/* SESUDAH (SUDAH DIPERBAIKI) */}
         <section className="px-6 sm:px-12 md:px-16 py-16 border-t border-zinc-200/60">
           <div className="max-w-3xl mx-auto flex flex-col items-start space-y-8 text-left">
             <div>
-              <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white">
-              Skills & Tools
-            </h2>
+              <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit">
+                Skills & Tools
+              </h2>
               <p className="text-zinc-500 text-sm sm:text-base mt-2">
                 Technologies, languages, and AI tools I work with regularly.
               </p>
