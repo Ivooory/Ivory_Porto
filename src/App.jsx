@@ -1,30 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 
-// 1. IMPORT GAMBAR PENGALAMAN
-import keuskupan1 from './img/keuskupan-1.jpg';
-import keuskupan2 from './img/keuskupan-2.jpg';
-import keuskupan3 from './img/keuskupan-3.jpg';
-import keuskupan4 from './img/keuskupan-4.jpg';
-
-import mahitala1 from './img/mahitala-1.jpg';
-import mahitala2 from './img/mahitala-2.jpg';
-import mahitala3 from './img/mahitala-3.jpg';
-
-import icare1 from './img/icare-1.jpg';
-import icare2 from './img/icare-2.jpg'; 
-import icare3 from './img/icare-3.jpg';
-
-// 2. IMPORT LOGO TECH & AI TOOLS
-import tailwindLogo from './img/tailwind.png';
-import pythonLogo from './img/python.png';
-import javaLogo from './img/java.png';
-import bootstrapLogo from './img/bootstrap.png';
-
-import claudeLogo from './img/claude.png';
-import geminiLogo from './img/gemini.png';
-import gptLogo from './img/gpt.png';
-
 // KOMPONEN FLOATING NAVBAR (Desain Kotak Minimalis)
 function Navbar() {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -165,24 +141,37 @@ export default function App() {
   const thirdBlockOpacity = useTransform(scrollYProgress, [0.7, 0.85, 1], [0, 1, 1]);
   const thirdBlockY = useTransform(scrollYProgress, [0.7, 0.85], [30, 0]);
 
-  // ARRAY GAMBAR PENGALAMAN
-  const keuskupanImages = [keuskupan1, keuskupan2, keuskupan3, keuskupan4];
-  const mahitalaImages = [mahitala1, mahitala2, mahitala3];
-  const icareImages = [icare1, icare2, icare3];
+  // ARRAY GAMBAR PENGALAMAN (PATH DIREKTORI PUBLIC)
+  const keuskupanImages = [
+    '/img/keuskupan-1.jpg',
+    '/img/keuskupan-2.jpg',
+    '/img/keuskupan-3.jpg',
+    '/img/keuskupan-4.jpg'
+  ];
+  const mahitalaImages = [
+    '/img/mahitala-1.jpg',
+    '/img/mahitala-2.jpg',
+    '/img/mahitala-3.jpg'
+  ];
+  const icareImages = [
+    '/img/icare-1.jpg',
+    '/img/icare-2.jpg',
+    '/img/icare-3.jpg'
+  ];
 
   // ARRAY LOGO TECH & FRAMEWORK (BARIS 1)
   const techStack = [
-    { name: "Tailwind CSS", icon: tailwindLogo },
-    { name: "Python", icon: pythonLogo },
-    { name: "Java", icon: javaLogo },
-    { name: "Bootstrap", icon: bootstrapLogo },
+    { name: "Tailwind CSS", icon: '/img/tailwind.png' },
+    { name: "Python", icon: '/img/python.png' },
+    { name: "Java", icon: '/img/java.png' },
+    { name: "Bootstrap", icon: '/img/bootstrap.png' },
   ];
 
   // ARRAY LOGO AI TOOLS (BARIS 2)
   const aiTools = [
-    { name: "Claude AI", icon: claudeLogo },
-    { name: "Gemini", icon: geminiLogo },
-    { name: "ChatGPT", icon: gptLogo },
+    { name: "Claude AI", icon: '/img/claude.png' },
+    { name: "Gemini", icon: '/img/gemini.png' },
+    { name: "ChatGPT", icon: '/img/gpt.png' },
   ];
 
   return (
