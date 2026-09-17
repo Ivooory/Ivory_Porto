@@ -1,14 +1,16 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'; // 1. Tambahkan import ini
+import MoreAbout from './MoreAbout'; // 2. Import komponen MoreAbout
 
 // KOMPONEN FLOATING NAVBAR (Desain Kotak Minimalis)
 function Navbar() {
   const [showNavbar, setShowNavbar] = useState(false);
+  const [activeTab, setActiveTab] = useState('about');
 
   useEffect(() => {
     const handleScroll = () => {
       const vh = window.innerHeight;
-      // Muncul setelah melewati area Hero
       if (window.scrollY > vh * 2.2) {
         setShowNavbar(true);
       } else {
@@ -20,6 +22,13 @@ function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navItems = [
+    { id: 'about', label: 'About', href: '#about' },
+    { id: 'experiences', label: 'Experience', href: '#experiences' },
+    { id: 'skills', label: 'Skill', href: '#skills' },
+    { id: 'contact', label: 'Contact', href: '#contact' },
+  ];
+
   return (
     <nav
       className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ease-out ${
@@ -28,23 +37,25 @@ function Navbar() {
           : 'opacity-0 -translate-y-4 pointer-events-none'
       }`}
     >
-      {/* Container Kotak Clean */}
-      <div className="flex items-center gap-6 px-6 py-2.5 bg-white/90 backdrop-blur-md border border-zinc-300 shadow-sm text-xs font-semibold uppercase tracking-wider text-zinc-600">
-        <a href="#about" className="hover:text-black transition-colors">
-          About
-        </a>
-        <span className="text-zinc-300">/</span>
-        <a href="#experiences" className="hover:text-black transition-colors">
-          Experiences
-        </a>
-        <span className="text-zinc-300">/</span>
-        <a href="#skills" className="hover:text-black transition-colors">
-          Skills
-        </a>
-        <span className="text-zinc-300">/</span>
-        <a href="#contact" className="hover:text-black transition-colors">
-          Contact
-        </a>
+      <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider px-4 py-1.5 bg-zinc-50/70 backdrop-blur-md">
+        {navItems.map((item, index) => (
+          <div key={item.id} className="flex items-center gap-2">
+            <a
+              href={item.href}
+              onClick={() => setActiveTab(item.id)}
+              className={`px-3 py-1 transition-all duration-200 ${
+                activeTab === item.id
+                  ? 'bg-blue-500 text-white font-bold'
+                  : 'text-zinc-800 hover:text-black'
+              }`}
+            >
+              {item.label}
+            </a>
+            {index < navItems.length - 1 && (
+              <span className="text-zinc-400 font-normal">|</span>
+            )}
+          </div>
+        ))}
       </div>
     </nav>
   );
@@ -104,7 +115,7 @@ function TechCarousel({ items, speed = 20 }) {
         {duplicatedItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center space-x-3 px-4 py-3 border border-zinc-200 bg-zinc-50/50 hover:bg-zinc-100 transition-colors shadow-sm flex-shrink-0"
+            className="flex items-center space-x-3 px-4 py-3 border border-zinc-200 bg-zinc-50/50 transition-colors shadow-sm flex-shrink-0"
           >
             <img
               src={item.icon}
@@ -121,7 +132,8 @@ function TechCarousel({ items, speed = 20 }) {
   );
 }
 
-export default function App() {
+// 3. KOMPONEN HOMEPAGE (Semua UI Landing Page kamu dipindah ke sini)
+function Home() {
   const containerRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -141,7 +153,7 @@ export default function App() {
   const thirdBlockOpacity = useTransform(scrollYProgress, [0.7, 0.85, 1], [0, 1, 1]);
   const thirdBlockY = useTransform(scrollYProgress, [0.7, 0.85], [30, 0]);
 
-  // ARRAY GAMBAR PENGALAMAN (PATH DIREKTORI PUBLIC)
+  // ARRAY GAMBAR PENGALAMAN
   const keuskupanImages = [
     '/img/keuskupan-1.jpg',
     '/img/keuskupan-2.jpg',
@@ -159,7 +171,7 @@ export default function App() {
     '/img/icare-3.jpg'
   ];
 
-  // ARRAY LOGO TECH & FRAMEWORK (BARIS 1)
+  // ARRAY LOGO TECH & FRAMEWORK
   const techStack = [
     { name: "Tailwind CSS", icon: '/img/tailwind.png' },
     { name: "Python", icon: '/img/python.png' },
@@ -167,7 +179,7 @@ export default function App() {
     { name: "Bootstrap", icon: '/img/bootstrap.png' },
   ];
 
-  // ARRAY LOGO AI TOOLS (BARIS 2)
+  // ARRAY LOGO AI TOOLS
   const aiTools = [
     { name: "Claude AI", icon: '/img/claude.png' },
     { name: "Gemini", icon: '/img/gemini.png' },
@@ -180,7 +192,7 @@ export default function App() {
       {/* FLOATING NAVBAR */}
       <Navbar />
 
-      {/* 1. PEMBUNGKUS BACKGROUND GRID */}
+      {/* PEMBUNGKUS BACKGROUND GRID */}
       <div 
         style={{
           backgroundImage: `
@@ -260,6 +272,16 @@ export default function App() {
                 </span>
                 {" "}building scalable, functional, and user-friendly web applications from the ground up.
               </p>
+
+              {/* 4. TOMBOL / HREF KE HALAMAN MORE ABOUT ME */}
+              <div className="pt-2">
+                <Link
+                  to="/more-about"
+                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-sm"
+                >
+                  Read More About Me →
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -440,7 +462,6 @@ export default function App() {
         </section>
 
       </div> 
-      {/* KHUSUS PENUTUP PEMBUNGKUS GRID BACKGROUND */}
 
       {/* FOOTER / CONTACT SECTION */}
       <footer id="contact" className="px-6 sm:px-12 md:px-16 py-20 bg-zinc-50 border-t border-zinc-200/60">
@@ -485,5 +506,17 @@ export default function App() {
       </footer>
 
     </div>
+  );
+}
+
+// 5. MAIN ROUTER COMPONENT
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/more-about" element={<MoreAbout />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
