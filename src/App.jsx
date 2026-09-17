@@ -1,9 +1,10 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'; // 1. Tambahkan import ini
-import MoreAbout from './MoreAbout'; // 2. Import komponen MoreAbout
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'; // Added useLocation
+import { HashLink } from 'react-router-hash-link'; // Added HashLink for cross-page navigation
+import MoreAbout from './MoreAbout';
 
-// KOMPONEN FLOATING NAVBAR (Desain Kotak Minimalis)
+// KOMPONEN FLOATING NAVBAR
 function Navbar() {
   const [showNavbar, setShowNavbar] = useState(false);
   const [activeTab, setActiveTab] = useState('about');
@@ -23,10 +24,10 @@ function Navbar() {
   }, []);
 
   const navItems = [
-    { id: 'about', label: 'About', href: '#about' },
-    { id: 'experiences', label: 'Experience', href: '#experiences' },
-    { id: 'skills', label: 'Skill', href: '#skills' },
-    { id: 'contact', label: 'Contact', href: '#contact' },
+    { id: 'about', label: 'About', href: '/#about' },
+    { id: 'experiences', label: 'Experience', href: '/#experiences' },
+    { id: 'skills', label: 'Skill', href: '/#skills' },
+    { id: 'contact', label: 'Contact', href: '/#contact' },
   ];
 
   return (
@@ -40,8 +41,9 @@ function Navbar() {
       <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider px-4 py-1.5 bg-zinc-50/70 backdrop-blur-md">
         {navItems.map((item, index) => (
           <div key={item.id} className="flex items-center gap-2">
-            <a
-              href={item.href}
+            <HashLink
+              smooth
+              to={item.href}
               onClick={() => setActiveTab(item.id)}
               className={`px-3 py-1 transition-all duration-200 ${
                 activeTab === item.id
@@ -50,7 +52,7 @@ function Navbar() {
               }`}
             >
               {item.label}
-            </a>
+            </HashLink>
             {index < navItems.length - 1 && (
               <span className="text-zinc-400 font-normal">|</span>
             )}
@@ -132,9 +134,10 @@ function TechCarousel({ items, speed = 20 }) {
   );
 }
 
-// 3. KOMPONEN HOMEPAGE (Semua UI Landing Page kamu dipindah ke sini)
+// KOMPONEN HOMEPAGE
 function Home() {
   const containerRef = useRef(null);
+  const location = useLocation(); // FIX: Inisialisasi useLocation di sini!
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -185,6 +188,22 @@ function Home() {
     { name: "Gemini", icon: '/img/gemini.png' },
     { name: "ChatGPT", icon: '/img/gpt.png' },
   ];
+
+  // SCROLL HANDLING UNTUK HASH
+  useEffect(() => {
+    if (location.hash) {
+      const targetId = location.hash.replace('#', '');
+      
+      const timer = setTimeout(() => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+
+      return () => clearTimeout(timer);
+    }
+  }, [location]);
 
   return (
     <div className="bg-zinc-50 text-slate-900 min-h-screen relative font-sans">
@@ -273,7 +292,6 @@ function Home() {
                 {" "}building scalable, functional, and user-friendly web applications from the ground up.
               </p>
 
-              {/* 4. TOMBOL / HREF KE HALAMAN MORE ABOUT ME */}
               <div className="pt-2">
                 <Link
                   to="/more-about"
@@ -509,7 +527,7 @@ function Home() {
   );
 }
 
-// 5. MAIN ROUTER COMPONENT
+// MAIN ROUTER COMPONENT
 export default function App() {
   return (
     <BrowserRouter>
