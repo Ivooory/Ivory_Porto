@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'; // Added useLocation
-import { HashLink } from 'react-router-hash-link'; // Added HashLink for cross-page navigation
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import MoreAbout from './MoreAbout';
 
 // KOMPONEN FLOATING NAVBAR
@@ -136,7 +136,7 @@ function TechCarousel({ items, speed = 20 }) {
 // KOMPONEN HOMEPAGE
 function Home() {
   const containerRef = useRef(null);
-  const location = useLocation(); // FIX: Inisialisasi useLocation di sini!
+  const location = useLocation();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -188,19 +188,26 @@ function Home() {
     { name: "ChatGPT", icon: '/img/gpt.png' },
   ];
 
-  // SCROLL HANDLING UNTUK HASH
+  // SCROLL HANDLING UNTUK HASH DAN BACK NAVIGATION INSTAN
   useEffect(() => {
-    if (location.hash) {
-      const targetId = location.hash.replace('#', '');
-      
-      const timer = setTimeout(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    const isFromMoreAbout = location.state?.fromMoreAbout;
+
+    if (location.hash || isFromMoreAbout) {
+      const targetId = location.hash ? location.hash.replace('#', '') : 'about';
+
+      requestAnimationFrame(() => {
         const element = document.getElementById(targetId);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({ 
+            behavior: isFromMoreAbout ? 'instant' : 'smooth', 
+            block: 'start' 
+          });
         }
-      }, 150);
-
-      return () => clearTimeout(timer);
+      });
     }
   }, [location]);
 

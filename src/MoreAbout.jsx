@@ -18,17 +18,6 @@ export default function MoreAbout() {
 
       <div className="max-w-3xl mx-auto space-y-10 relative z-10">
         
-        {/* TOMBOL BACK TO PORTO (#ABOUT) */}
-        <div>
-          <HashLink
-            smooth
-            to="/#about"
-            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-sm"
-          >
-            ← Back to About
-          </HashLink>
-        </div>
-
         {/* HEADER SECTION */}
         <div className="space-y-3">
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white bg-blue-500 w-fit px-3 py-1">
