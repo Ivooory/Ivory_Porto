@@ -1,9 +1,10 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import AboutMe from './AboutMe'; // pastikan path sesuai dengan struktur folder Anda
+import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom'; // Added useLocation
+import { HashLink } from 'react-router-hash-link'; // Added HashLink for cross-page navigation
+import MoreAbout from './MoreAbout';
 
-// KOMPONEN FLOATING NAVBAR (Desain Kotak Minimalis)
-// KOMPONEN FLOATING NAVBAR (Dengan Efek Blur pada Background Teks)
+// KOMPONEN FLOATING NAVBAR
 function Navbar() {
   const [showNavbar, setShowNavbar] = useState(false);
   const [activeTab, setActiveTab] = useState('about');
@@ -11,7 +12,6 @@ function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const vh = window.innerHeight;
-      // Muncul setelah melewati area Hero
       if (window.scrollY > vh * 2.2) {
         setShowNavbar(true);
       } else {
@@ -24,10 +24,9 @@ function Navbar() {
   }, []);
 
   const navItems = [
-    { id: 'about', label: 'About', href: '#about' },
-    { id: 'experiences', label: 'Experience', href: '#experiences' },
-    { id: 'skills', label: 'Skill', href: '#skills' },
-    { id: 'contact', label: 'Contact', href: '#contact' },
+    { id: 'about', label: 'About', href: '/#about' },
+    { id: 'experiences', label: 'Experience', href: '/#experiences' },
+    { id: 'skills', label: 'Skill', href: '/#skills' },
   ];
 
   return (
@@ -38,12 +37,12 @@ function Navbar() {
           : 'opacity-0 -translate-y-4 pointer-events-none'
       }`}
     >
-      {/* Container dengan efek Blur & Transparan tipis */}
       <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider px-4 py-1.5 bg-zinc-50/70 backdrop-blur-md">
         {navItems.map((item, index) => (
           <div key={item.id} className="flex items-center gap-2">
-            <a
-              href={item.href}
+            <HashLink
+              smooth
+              to={item.href}
               onClick={() => setActiveTab(item.id)}
               className={`px-3 py-1 transition-all duration-200 ${
                 activeTab === item.id
@@ -52,8 +51,7 @@ function Navbar() {
               }`}
             >
               {item.label}
-            </a>
-            {/* Tampilkan garis pembatas "|" kecuali untuk item terakhir */}
+            </HashLink>
             {index < navItems.length - 1 && (
               <span className="text-zinc-400 font-normal">|</span>
             )}
@@ -118,7 +116,7 @@ function TechCarousel({ items, speed = 20 }) {
         {duplicatedItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center space-x-3 px-4 py-3 border border-zinc-200 bg-zinc-50/50 hover:bg-zinc-100 transition-colors shadow-sm flex-shrink-0"
+            className="flex items-center space-x-3 px-4 py-3 border border-zinc-200 bg-zinc-50/50 transition-colors shadow-sm flex-shrink-0"
           >
             <img
               src={item.icon}
@@ -135,8 +133,10 @@ function TechCarousel({ items, speed = 20 }) {
   );
 }
 
-export default function App() {
+// KOMPONEN HOMEPAGE
+function Home() {
   const containerRef = useRef(null);
+  const location = useLocation(); // FIX: Inisialisasi useLocation di sini!
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -155,7 +155,7 @@ export default function App() {
   const thirdBlockOpacity = useTransform(scrollYProgress, [0.7, 0.85, 1], [0, 1, 1]);
   const thirdBlockY = useTransform(scrollYProgress, [0.7, 0.85], [30, 0]);
 
-  // ARRAY GAMBAR PENGALAMAN (PATH DIREKTORI PUBLIC)
+  // ARRAY GAMBAR PENGALAMAN
   const keuskupanImages = [
     '/img/keuskupan-1.jpg',
     '/img/keuskupan-2.jpg',
@@ -173,7 +173,7 @@ export default function App() {
     '/img/icare-3.jpg'
   ];
 
-  // ARRAY LOGO TECH & FRAMEWORK (BARIS 1)
+  // ARRAY LOGO TECH & FRAMEWORK
   const techStack = [
     { name: "Tailwind CSS", icon: '/img/tailwind.png' },
     { name: "Python", icon: '/img/python.png' },
@@ -181,12 +181,28 @@ export default function App() {
     { name: "Bootstrap", icon: '/img/bootstrap.png' },
   ];
 
-  // ARRAY LOGO AI TOOLS (BARIS 2)
+  // ARRAY LOGO AI TOOLS
   const aiTools = [
     { name: "Claude AI", icon: '/img/claude.png' },
     { name: "Gemini", icon: '/img/gemini.png' },
     { name: "ChatGPT", icon: '/img/gpt.png' },
   ];
+
+  // SCROLL HANDLING UNTUK HASH
+  useEffect(() => {
+    if (location.hash) {
+      const targetId = location.hash.replace('#', '');
+      
+      const timer = setTimeout(() => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+
+      return () => clearTimeout(timer);
+    }
+  }, [location]);
 
   return (
     <div className="bg-zinc-50 text-slate-900 min-h-screen relative font-sans">
@@ -194,7 +210,7 @@ export default function App() {
       {/* FLOATING NAVBAR */}
       <Navbar />
 
-      {/* 1. PEMBUNGKUS BACKGROUND GRID */}
+      {/* PEMBUNGKUS BACKGROUND GRID */}
       <div 
         style={{
           backgroundImage: `
@@ -210,10 +226,9 @@ export default function App() {
           <div className="sticky top-0 h-screen flex flex-col items-center justify-center p-4 sm:p-6 text-center overflow-hidden">
             <div className="grid place-items-center max-w-4xl w-full px-2">
               
-              {/* BLOCK 1: HELLO WORLD & IVORY IVERSON */}
               <motion.div 
                 style={{ opacity: firstBlockOpacity, y: firstBlockY, pointerEvents: firstBlockPointer }}
-                className="col-start-1 row-start-1 flex flex-col items-center justify-center space-y-2 sm:space-y-4 w-full"
+                className="col-start-1 row-start-1 flex flex-col items-center space-y-2 sm:space-y-4 w-full"
               >
                 <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-black">
                   Hello, World!
@@ -224,7 +239,6 @@ export default function App() {
                 </h1>
               </motion.div>
 
-              {/* BLOCK 2: INFORMATICS STUDENT */}
               <motion.div 
                 style={{ opacity: secondBlockOpacity, y: secondBlockY, pointerEvents: secondBlockPointer }}
                 className="col-start-1 row-start-1 flex items-center justify-center w-full"
@@ -236,7 +250,6 @@ export default function App() {
                 </h1>
               </motion.div>
 
-              {/* BLOCK 3: EXPLORE MY WORK */}
               <motion.div 
                 style={{ opacity: thirdBlockOpacity, y: thirdBlockY }}
                 className="col-start-1 row-start-1 flex flex-col items-center justify-center w-full"
@@ -251,7 +264,44 @@ export default function App() {
         </div>
 
         {/* SECTION 2: ABOUT ME */}
-        <AboutMe />
+        <section id="about" className="px-6 sm:px-12 md:px-16 pt-24 pb-16">
+          <div className="max-w-3xl mx-auto flex flex-col items-start justify-start space-y-6 text-left">
+            <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit px-3 py-1">
+              About Me
+            </h2>
+            
+            <div className="space-y-4 text-base sm:text-lg text-zinc-800 leading-relaxed font-normal">
+              <p>
+                Hi, I'm{" "}
+                <span className="text-xl sm:text-2xl font-bold text-black">
+                  Ivory Iverson
+                </span>
+                , a 21-year-old Informatics student at Parahyangan Catholic University (UNPAR), based in Bandung with a deep interest in{" "}
+                <span className="text-lg font-bold text-black">
+                  Artificial Intelligence and Machine Learning
+                </span>
+                .
+              </p>
+
+              <p>
+                Alongside my interest on AI, I have hands-on experience in{" "}
+                <span className="text-lg font-bold text-black">
+                  Web Development and Information Systems
+                </span>
+                {" "}building scalable, functional, and user-friendly web applications from the ground up.
+              </p>
+
+              <div className="pt-2">
+                <Link
+                  to="/more-about"
+                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-sm"
+                >
+                  Read More About Me →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* SECTION 3: MY EXPERIENCES */}
         <section id="experiences" className="px-6 sm:px-12 md:px-16 py-16 border-t border-zinc-200/60">
@@ -429,7 +479,6 @@ export default function App() {
         </section>
 
       </div> 
-      {/* KHUSUS PENUTUP PEMBUNGKUS GRID BACKGROUND */}
 
       {/* FOOTER / CONTACT SECTION */}
       <footer id="contact" className="px-6 sm:px-12 md:px-16 py-20 bg-zinc-50 border-t border-zinc-200/60">
@@ -474,5 +523,17 @@ export default function App() {
       </footer>
 
     </div>
+  );
+}
+
+// MAIN ROUTER COMPONENT
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/more-about" element={<MoreAbout />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
