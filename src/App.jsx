@@ -1,9 +1,12 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
+import AboutMe from './AboutMe'; // pastikan path sesuai dengan struktur folder Anda
 
 // KOMPONEN FLOATING NAVBAR (Desain Kotak Minimalis)
+// KOMPONEN FLOATING NAVBAR (Dengan Efek Blur pada Background Teks)
 function Navbar() {
   const [showNavbar, setShowNavbar] = useState(false);
+  const [activeTab, setActiveTab] = useState('about');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +23,13 @@ function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navItems = [
+    { id: 'about', label: 'About', href: '#about' },
+    { id: 'experiences', label: 'Experience', href: '#experiences' },
+    { id: 'skills', label: 'Skill', href: '#skills' },
+    { id: 'contact', label: 'Contact', href: '#contact' },
+  ];
+
   return (
     <nav
       className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ease-out ${
@@ -28,23 +38,27 @@ function Navbar() {
           : 'opacity-0 -translate-y-4 pointer-events-none'
       }`}
     >
-      {/* Container Kotak Clean */}
-      <div className="flex items-center gap-6 px-6 py-2.5 bg-white/90 backdrop-blur-md border border-zinc-300 shadow-sm text-xs font-semibold uppercase tracking-wider text-zinc-600">
-        <a href="#about" className="hover:text-black transition-colors">
-          About
-        </a>
-        <span className="text-zinc-300">/</span>
-        <a href="#experiences" className="hover:text-black transition-colors">
-          Experiences
-        </a>
-        <span className="text-zinc-300">/</span>
-        <a href="#skills" className="hover:text-black transition-colors">
-          Skills
-        </a>
-        <span className="text-zinc-300">/</span>
-        <a href="#contact" className="hover:text-black transition-colors">
-          Contact
-        </a>
+      {/* Container dengan efek Blur & Transparan tipis */}
+      <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider px-4 py-1.5 bg-zinc-50/70 backdrop-blur-md">
+        {navItems.map((item, index) => (
+          <div key={item.id} className="flex items-center gap-2">
+            <a
+              href={item.href}
+              onClick={() => setActiveTab(item.id)}
+              className={`px-3 py-1 transition-all duration-200 ${
+                activeTab === item.id
+                  ? 'bg-blue-500 text-white font-bold'
+                  : 'text-zinc-800 hover:text-black'
+              }`}
+            >
+              {item.label}
+            </a>
+            {/* Tampilkan garis pembatas "|" kecuali untuk item terakhir */}
+            {index < navItems.length - 1 && (
+              <span className="text-zinc-400 font-normal">|</span>
+            )}
+          </div>
+        ))}
       </div>
     </nav>
   );
@@ -196,9 +210,10 @@ export default function App() {
           <div className="sticky top-0 h-screen flex flex-col items-center justify-center p-4 sm:p-6 text-center overflow-hidden">
             <div className="grid place-items-center max-w-4xl w-full px-2">
               
+              {/* BLOCK 1: HELLO WORLD & IVORY IVERSON */}
               <motion.div 
                 style={{ opacity: firstBlockOpacity, y: firstBlockY, pointerEvents: firstBlockPointer }}
-                className="col-start-1 row-start-1 flex flex-col items-center space-y-2 sm:space-y-4 w-full"
+                className="col-start-1 row-start-1 flex flex-col items-center justify-center space-y-2 sm:space-y-4 w-full"
               >
                 <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-black">
                   Hello, World!
@@ -209,6 +224,7 @@ export default function App() {
                 </h1>
               </motion.div>
 
+              {/* BLOCK 2: INFORMATICS STUDENT */}
               <motion.div 
                 style={{ opacity: secondBlockOpacity, y: secondBlockY, pointerEvents: secondBlockPointer }}
                 className="col-start-1 row-start-1 flex items-center justify-center w-full"
@@ -220,6 +236,7 @@ export default function App() {
                 </h1>
               </motion.div>
 
+              {/* BLOCK 3: EXPLORE MY WORK */}
               <motion.div 
                 style={{ opacity: thirdBlockOpacity, y: thirdBlockY }}
                 className="col-start-1 row-start-1 flex flex-col items-center justify-center w-full"
@@ -234,35 +251,7 @@ export default function App() {
         </div>
 
         {/* SECTION 2: ABOUT ME */}
-        <section id="about" className="px-6 sm:px-12 md:px-16 pt-24 pb-16">
-          <div className="max-w-3xl mx-auto flex flex-col items-start justify-start space-y-6 text-left">
-            <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit px-3 py-1">
-              About Me
-            </h2>
-            
-            <div className="space-y-4 text-base sm:text-lg text-zinc-800 leading-relaxed font-normal">
-              <p>
-                Hi, I'm{" "}
-                <span className="text-xl sm:text-2xl font-bold text-black">
-                  Ivory Iverson
-                </span>
-                , a 21-year-old Informatics student at Parahyangan Catholic University (UNPAR), based in Bandung with a deep interest in{" "}
-                <span className="text-lg font-bold text-black">
-                  Artificial Intelligence and Machine Learning
-                </span>
-                .
-              </p>
-
-              <p>
-                Alongside my interest on AI, I have hands-on experience in{" "}
-                <span className="text-lg font-bold text-black">
-                  Web Development and Information Systems
-                </span>
-                {" "}building scalable, functional, and user-friendly web applications from the ground up.
-              </p>
-            </div>
-          </div>
-        </section>
+        <AboutMe />
 
         {/* SECTION 3: MY EXPERIENCES */}
         <section id="experiences" className="px-6 sm:px-12 md:px-16 py-16 border-t border-zinc-200/60">
