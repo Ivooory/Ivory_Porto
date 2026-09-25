@@ -22,16 +22,7 @@ export default function MoreAbout() {
       >
         <div className="max-w-3xl mx-auto space-y-12 text-left">
           
-          {/* TOMBOL KEMBALI */}
-          <div>
-            <Link
-              to="/#about"
-              state={{ fromMoreAbout: true }}
-              className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-sm"
-            >
-              ← Back to Main Page
-            </Link>
-          </div>
+          
 
           {/* HEADER SECTION */}
           <div className="space-y-4">
@@ -105,7 +96,7 @@ export default function MoreAbout() {
             </div>
           </section>
 
-          {/* SECTION 3: HOBI & KETERTARIKAN PERSONAL */}
+          {/*}
           <section className="space-y-4 pt-4 border-t border-zinc-200">
             <h2 className="text-2xl sm:text-3xl font-bold text-black">
               ⚡ Beyond Code: Hobbies & Personal Life

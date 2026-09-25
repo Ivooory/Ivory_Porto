@@ -3,6 +3,8 @@ import { useRef, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import MoreAbout from './MoreAbout';
+import { MorphingText } from './MorphingText';
+import Ferrofluid from './Ferrofluid';
 
 // KOMPONEN FLOATING NAVBAR
 function Navbar() {
@@ -37,7 +39,7 @@ function Navbar() {
           : 'opacity-0 -translate-y-4 pointer-events-none'
       }`}
     >
-      <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider px-4 py-1.5 bg-zinc-50/70 backdrop-blur-md">
+      <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider px-4 py-1.5 bg-zinc-50/80 backdrop-blur-md shadow-sm border border-zinc-200/50">
         {navItems.map((item, index) => (
           <div key={item.id} className="flex items-center gap-2">
             <HashLink
@@ -82,7 +84,7 @@ function ImageCarousel({ images }) {
         {duplicatedImages.map((src, index) => (
           <div
             key={index}
-            className="w-48 sm:w-60 h-32 sm:h-36 flex-shrink-0 border border-zinc-200 bg-zinc-100 shadow-sm overflow-hidden"
+            className="w-48 sm:w-60 h-32 sm:h-36 flex-shrink-0 border border-zinc-200 bg-zinc-100/80 backdrop-blur-sm shadow-sm overflow-hidden"
           >
             <img
               src={src}
@@ -116,7 +118,7 @@ function TechCarousel({ items, speed = 20 }) {
         {duplicatedItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center space-x-3 px-4 py-3 border border-zinc-200 bg-zinc-50/50 transition-colors shadow-sm flex-shrink-0"
+            className="flex items-center space-x-3 px-4 py-3 border border-zinc-200 bg-zinc-50/70 backdrop-blur-sm transition-colors shadow-sm flex-shrink-0"
           >
             <img
               src={item.icon}
@@ -214,11 +216,23 @@ function Home() {
   return (
     <div className="bg-zinc-50 text-slate-900 min-h-screen relative font-sans">
       
+      {/* 1. BACKGROUND CANVAS FERROFLUID (PERMANEN DI BACKGROUND) */}
+      <div className="fixed inset-0 z-0 pointer-events-none opacity-40">
+        <Ferrofluid 
+          colors={['#3b82f6', '#1d4ed8', '#60a5fa']}
+          speed={0.4}
+          scale={1.5}
+          glow={1.8}
+          mouseInteraction={true}
+        />
+      </div>
+
       {/* FLOATING NAVBAR */}
       <Navbar />
 
-      {/* PEMBUNGKUS BACKGROUND GRID */}
+      {/* 2. PEMBUNGKUS BACKGROUND GRID & KONTEN (LAYER ATAS) */}
       <div 
+        className="relative z-10"
         style={{
           backgroundImage: `
             linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
@@ -237,7 +251,7 @@ function Home() {
                 style={{ opacity: firstBlockOpacity, y: firstBlockY, pointerEvents: firstBlockPointer }}
                 className="col-start-1 row-start-1 flex flex-col items-center space-y-2 sm:space-y-4 w-full"
               >
-                <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-black">
+                <h2 className="text-2xl sm:text-7xl md:text-5xl font-extrabold tracking-tight text-black">
                   Hello, World!
                 </h2>
                 <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-center">
@@ -283,7 +297,7 @@ function Home() {
                 <span className="text-xl sm:text-2xl font-bold text-black">
                   Ivory Iverson
                 </span>
-                ,also known as
+                , also known as
                 <span className="text-xl sm:text-2xl font-bold text-black">
                   {" "}Ivory.{" "}
                 </span>
@@ -305,7 +319,7 @@ function Home() {
               <div className="pt-2">
                 <Link
                   to="/more-about"
-                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors"
+                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-sm"
                 >
                   Read More About Me →
                 </Link>
@@ -327,7 +341,7 @@ function Home() {
                 <h3 className="text-xl bg-blue-500 sm:text-2xl font-bold text-white w-fit px-2 py-0.5">
                   Full-Stack Developer
                 </h3>
-                <span className="text-sm font-semibold text-zinc-500">
+                <span className="text-sm font-semibold text-zinc-600">
                   2026 – Present
                 </span>
               </div>
@@ -375,7 +389,7 @@ function Home() {
                 <h3 className="text-xl sm:text-2xl bg-blue-500 font-bold text-white w-fit px-2 py-0.5">
                   Head of Batch 49 (Ketua Angkatan)
                 </h3>
-                <span className="text-sm font-semibold text-zinc-500">
+                <span className="text-sm font-semibold text-zinc-600">
                   2025
                 </span>
               </div>
@@ -420,7 +434,7 @@ function Home() {
                 <h3 className="text-xl sm:text-2xl bg-blue-500 font-bold text-white w-fit px-2 py-0.5">
                   Coding Mentor & Volunteer
                 </h3>
-                <span className="text-sm font-semibold text-zinc-500">
+                <span className="text-sm font-semibold text-zinc-600">
                   2023
                 </span>
               </div>
@@ -466,7 +480,7 @@ function Home() {
               <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit px-3 py-1">
                 Skills & Tools
               </h2>
-              <p className="text-zinc-500 text-sm sm:text-base mt-2">
+              <p className="text-zinc-600 text-sm sm:text-base mt-2 font-medium">
                 Technologies, languages, and AI tools I work with regularly.
               </p>
             </div>
@@ -489,49 +503,62 @@ function Home() {
           </div>
         </section>
 
-      </div> 
-
-      {/* FOOTER / CONTACT SECTION */}
-      <footer id="contact" className="px-6 sm:px-12 md:px-16 py-20 bg-zinc-50 border-t border-zinc-200/60">
-        <div className="max-w-3xl mx-auto flex flex-col items-start space-y-6 text-left">
-          
-          <span className="text-xs uppercase tracking-widest text-zinc-400 font-semibold">
-            Contact
-          </span>
-
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-black">
-            Let's build something together.
-          </h2>
-
-          <p className="text-base sm:text-lg text-zinc-600 font-normal max-w-xl">
-            Feel free to reach out!
-          </p>
-
-          <a 
-            href="mailto:ivoryiverson03@gmail.com" 
-            className="text-xl sm:text-2xl font-bold text-black underline underline-offset-8 hover:text-zinc-600 transition-colors"
-          >
-            ivoryiverson03@gmail.com
-          </a>
-
-          <div className="pt-8 flex flex-col sm:flex-row sm:items-center justify-between w-full border-t border-zinc-200/60 gap-4 text-sm text-zinc-500">
-            <div className="flex space-x-6 font-medium">
-              <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
-                GitHub
-              </a>
-              <a href="https://www.linkedin.com/in/ivory-iverson-284815393/" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
-                LinkedIn
-              </a>
-              <a href="https://www.instagram.com/ivoryiverson_/" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
-                Instagram
-              </a>
-            </div>
-            
-            <span>© {new Date().getFullYear()} Ivory Iverson. All rights reserved.</span>
-          </div>
-
+        {/* MORPHING TEXT SECTION 
+        <div className="py-12">
+          <MorphingText
+            words={["DEVELOPER", "INFORMATICS", "AI ENTHUSIAST"]}
+            color="#3b82f6"
+            morphDuration={1.2}
+            holdDuration={1.5}
+            blurAmount={12}
+            ease="easeInOut"
+          />
         </div>
-      </footer>
+        */}
+
+        {/* FOOTER / CONTACT SECTION */}
+        <footer id="contact" className="px-6 sm:px-12 md:px-16 py-20 border-t border-zinc-200/60">
+          <div className="max-w-3xl mx-auto flex flex-col items-start space-y-6 text-left">
+            
+            <span className="text-xs uppercase tracking-widest text-zinc-500 font-bold">
+              Contact
+            </span>
+
+            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-black">
+              Let's build something together.
+            </h2>
+
+            <p className="text-base sm:text-lg text-zinc-700 font-normal max-w-xl">
+              Feel free to reach out!
+            </p>
+
+            <a 
+              href="mailto:ivoryiverson03@gmail.com" 
+              className="text-xl sm:text-2xl font-bold text-black underline underline-offset-8 hover:text-blue-600 transition-colors"
+            >
+              ivoryiverson03@gmail.com
+            </a>
+
+            <div className="pt-8 flex flex-col sm:flex-row sm:items-center justify-between w-full border-t border-zinc-200/60 gap-4 text-sm text-zinc-600">
+              <div className="flex space-x-6 font-semibold">
+                <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
+                  GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/ivory-iverson-284815393/" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
+                  LinkedIn
+                </a>
+                <a href="https://www.instagram.com/ivoryiverson_/" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
+                  Instagram
+                </a>
+              </div>
+              
+              <span>© {new Date().getFullYear()} Ivory Iverson. All rights reserved.</span>
+            </div>
+
+          </div>
+        </footer>
+
+      </div> 
 
     </div>
   );
