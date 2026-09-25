@@ -271,7 +271,7 @@ function Home() {
         </div>
 
         {/* SECTION 2: ABOUT ME */}
-        <section id="about" className="px-6 sm:px-12 md:px-16 pt-24 pb-16">
+        <section id="about" className="px-6 sm:px-12 md:px-16 pt-24 pb-4">
           <div className="max-w-3xl mx-auto flex flex-col items-start justify-start space-y-6 text-left">
             <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit px-3 py-1">
               About Me
@@ -305,7 +305,7 @@ function Home() {
               <div className="pt-2">
                 <Link
                   to="/more-about"
-                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-red-50"
+                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors"
                 >
                   Read More About Me →
                 </Link>
@@ -317,7 +317,7 @@ function Home() {
         {/* SECTION 3: MY EXPERIENCES */}
         <section id="experiences" className="px-6 sm:px-12 md:px-16 py-16 border-t border-zinc-200/60">
           <div className="max-w-3xl mx-auto flex flex-col items-start space-y-10 text-left">
-            <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit px-3 py-1">
+            <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit text-right px-3 py-1">
               My Experiences
             </h2>
 
@@ -460,7 +460,7 @@ function Home() {
         </section>
 
         {/* SECTION 4: TECH STACK & AI TOOLS SECTION */}
-        <section id="skills" className="px-6 sm:px-12 md:px-16 py-16 border-t border-zinc-200/60">
+        <section id="skills" className="px-6 sm:px-12 md:px-16 py-10 border-t border-zinc-200/60">
           <div className="max-w-3xl mx-auto flex flex-col items-start space-y-8 text-left">
             <div>
               <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit px-3 py-1">

@@ -39,18 +39,18 @@ export default function MoreAbout() {
               More About Me
             </h1>
             <p className="text-zinc-600 text-base sm:text-lg">
-              A deeper look into my journey, background, interests, and everything in between.
+              A deeper look into my background, interests, and everything in between.
             </p>
           </div>
 
           {/* SECTION 1: PERKULIAHAN & JURUSAN */}
           <section className="space-y-4  border-t border-zinc-200">
             <h2 className="text-2xl sm:text-3xl font-bold text-black">
-            Life as an 
-            <span className="text-4xl sm:text-4xl font-extrabold tracking-tight text-white bg-blue-500 w-fit">
-            {" "}Informatics{" "} 
+            Life as an {" "}
+            <span className="text-4xl sm:text-4xl font-extrabold tracking-tight text-white bg-blue-500 w-fit px-2">
+            Informatics
             </span>
-            Student
+            {" "} Student
             </h2>
             <div className="space-y-3 text-base sm:text-lg text-zinc-800 leading-relaxed font-normal">
               <p>
@@ -73,7 +73,7 @@ export default function MoreAbout() {
           {/* SECTION 2: RIWAYAT AKADEMIK / EDUCATION HISTORY */}
           <section className="space-y-4 pt-4 border-t border-zinc-200">
             <h2 className="text-2xl sm:text-3xl font-bold text-black">
-              <span className="text-4xl sm:text-4xl font-extrabold tracking-tight text-white bg-blue-500 w-fit">
+              <span className="text-4xl sm:text-4xl font-extrabold tracking-tight text-white bg-blue-500 w-fit px-2">
               Academic
               </span> 
               {" "}Journey 
@@ -81,26 +81,24 @@ export default function MoreAbout() {
             <div className="space-y-6">
               
               {/* PERGURUAN TINGGI */}
-              <div className="space-y-1">
+              <div className="space-y-">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-bold text-black">Universitas Katolik Parahyangan (UNPAR)</h3>
-                  <span className="text-sm font-semibold text-zinc-500">2023 – Sekarang</span>
+                  <span className="text-sm font-semibold text-zinc-500">2023 – Present</span>
                 </div>
                 <p className="text-sm font-semibold text-blue-600">Bachelor of Science in Informatics / Computer Science</p>
-                <p className="text-zinc-700 text-sm sm:text-base leading-relaxed pt-1">
-                  Mempelajari struktur data, algoritma, pengembangan perangkat lunak, sistem basis data, hingga kecerdasan buatan dan riset aplikasi AI.
-                </p>
+                <p className="text-zinc-700 text-sm sm:text-base leading-relaxed pt-">
+                  Studying data structures, algorithms, information systems, software engineering, database systems, and artificial intelligence                </p>
               </div>
 
               {/* SMA / PENDIDIKAN SEBELUMNYA */}
-              <div className="space-y-1 pt-2">
+              <div className="space-y- pt-0">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-bold text-black">SMA [Nama SMA Anda]</h3>
-                  <span className="text-sm font-semibold text-zinc-500">[Tahun – Tahun]</span>
+                  <h3 className="text-lg font-bold text-black">Saint Angela Highschool Bandung</h3>
+                  <span className="text-sm font-semibold text-zinc-500">2023</span>
                 </div>
-                <p className="text-sm font-semibold text-zinc-600">[Jurusan, misal: MIPA / IPA]</p>
+                <p className="text-sm font-semibold text-zinc-600">MIPA</p>
                 <p className="text-zinc-700 text-sm sm:text-base leading-relaxed pt-1">
-                  Mulai mengenal logika pemrograman dasar, matematika terapan, dan ketertarikan awal pada dunia teknologi.
                 </p>
               </div>
 
