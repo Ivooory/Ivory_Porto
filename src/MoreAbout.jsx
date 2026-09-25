@@ -1,89 +1,157 @@
-import { HashLink } from 'react-router-hash-link';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function MoreAbout() {
+  // Memastikan saat halaman MoreAbout dibuka, scroll otomatis mulai dari atas
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <div className="bg-zinc-50 min-h-screen text-slate-900 font-sans px-6 py-12 sm:px-12 md:px-16">
-      
-      {/* PEMBUNGKUS BACKGROUND GRID */}
-      <div 
-        className="fixed inset-0 pointer-events-none"
+    <div className="bg-zinc-50 text-slate-900 min-h-screen relative font-sans">
+      {/* BACKGROUND GRID */}
+      <div
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px)
+            linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px)
           `,
           backgroundSize: '40px 40px'
         }}
-      />
-
-      <div className="max-w-3xl mx-auto space-y-10 relative z-10">
-        
-        {/* HEADER SECTION */}
-        <div className="space-y-3">
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white bg-blue-500 w-fit px-3 py-1">
-            More About Me
-          </h1>
-          <p className="text-zinc-600 text-lg font-medium">
-            A deeper look into my background, academic journey, interests, and philosophy.
-          </p>
-        </div>
-
-        {/* KONTEN UTAMA */}
-        <div className="space-y-8 text-zinc-800 leading-relaxed text-base sm:text-lg">
+        className="min-h-screen py-12 px-6 sm:px-12 md:px-16"
+      >
+        <div className="max-w-3xl mx-auto space-y-12 text-left">
           
-          {/* AKADEMIK & MASA DUKUNG */}
-          <section className="space-y-3 border-l-4 border-blue-500 pl-4 py-1">
-            <h2 className="text-xl sm:text-2xl font-bold text-black">
-              Academic Journey & Background
-            </h2>
-            <p>
-              I am currently pursuing my Bachelor's Degree in **Informatics / Computer Science** at **Parahyangan Catholic University (UNPAR)** in Bandung. My academic trip has been shaped by a strong curiosity about how software systems work under the hood and how data-driven decisions can solve real-world problems.
+          {/* TOMBOL KEMBALI */}
+          <div>
+            <Link
+              to="/#about"
+              state={{ fromMoreAbout: true }}
+              className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-sm"
+            >
+              ← Back to Main Page
+            </Link>
+          </div>
+
+          {/* HEADER SECTION */}
+          <div className="space-y-4">
+            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white bg-blue-500 w-fit px-3 py-1">
+              More About Me
+            </h1>
+            <p className="text-zinc-600 text-base sm:text-lg">
+              A deeper look into my journey, background, interests, and everything in between.
             </p>
+          </div>
+
+          {/* SECTION 1: PERKULIAHAN & JURUSAN */}
+          <section className="space-y-4  border-t border-zinc-200">
+            <h2 className="text-2xl sm:text-3xl font-bold text-black">
+            Life as an 
+            <span className="text-4xl sm:text-4xl font-extrabold tracking-tight text-white bg-blue-500 w-fit">
+            {" "}Informatics{" "} 
+            </span>
+            Student
+            </h2>
+            <div className="space-y-3 text-base sm:text-lg text-zinc-800 leading-relaxed font-normal">
+              <p>
+              I am currently a 7th-semester Informatics student at Parahyangan Catholic University (UNPAR). My time here has been a blend of deep technical learning, hands-on problem solving, and active involvement in campus life.
+              Beyond academic, I’ve always believed in learning through action and leadership. Throughout my studies, I have actively contributed to several key university committees and social initiatives:              </p>
+              <ul className="list-disc list-inside space-y-2 pl-2">
+              <li>
+                <span className="font-bold text-black">I-CARE 2023:</span> Contributed to social outreach by mentoring local youth in basic programming and computational thinking.
+              </li>
+              <li>
+                <span className="font-bold text-black">Departmental SIAP Committee (2024):</span> Organized and led orientation programs to welcome and guide incoming Informatics freshmen.
+              </li>
+              <li>
+                <span className="font-bold text-black">Faculty SIAP Committee (2024):</span> Coordinated faculty-level student orientation activities for the Faculty of Industrial Technology.
+              </li>
+            </ul>
+            </div>
           </section>
 
-          {/* FOKUS AI & MACHINE LEARNING */}
-          <section className="space-y-3 border-l-4 border-blue-500 pl-4 py-1">
-            <h2 className="text-xl sm:text-2xl font-bold text-black">
-              Passionate about AI & Machine Learning
+          {/* SECTION 2: RIWAYAT AKADEMIK / EDUCATION HISTORY */}
+          <section className="space-y-4 pt-4 border-t border-zinc-200">
+            <h2 className="text-2xl sm:text-3xl font-bold text-black">
+              <span className="text-4xl sm:text-4xl font-extrabold tracking-tight text-white bg-blue-500 w-fit">
+              Academic
+              </span> 
+              {" "}Journey 
             </h2>
-            <p>
-              While I have strong foundations in full-stack web application development, my primary technical passion lies in **Artificial Intelligence and Machine Learning**. I enjoy exploring model architectures, prompt engineering, data processing, and finding innovative ways to integrate intelligent systems into modern web applications.
-            </p>
+            <div className="space-y-6">
+              
+              {/* PERGURUAN TINGGI */}
+              <div className="space-y-1">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-bold text-black">Universitas Katolik Parahyangan (UNPAR)</h3>
+                  <span className="text-sm font-semibold text-zinc-500">2023 – Sekarang</span>
+                </div>
+                <p className="text-sm font-semibold text-blue-600">Bachelor of Science in Informatics / Computer Science</p>
+                <p className="text-zinc-700 text-sm sm:text-base leading-relaxed pt-1">
+                  Mempelajari struktur data, algoritma, pengembangan perangkat lunak, sistem basis data, hingga kecerdasan buatan dan riset aplikasi AI.
+                </p>
+              </div>
+
+              {/* SMA / PENDIDIKAN SEBELUMNYA */}
+              <div className="space-y-1 pt-2">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-bold text-black">SMA [Nama SMA Anda]</h3>
+                  <span className="text-sm font-semibold text-zinc-500">[Tahun – Tahun]</span>
+                </div>
+                <p className="text-sm font-semibold text-zinc-600">[Jurusan, misal: MIPA / IPA]</p>
+                <p className="text-zinc-700 text-sm sm:text-base leading-relaxed pt-1">
+                  Mulai mengenal logika pemrograman dasar, matematika terapan, dan ketertarikan awal pada dunia teknologi.
+                </p>
+              </div>
+
+            </div>
           </section>
 
-          {/* ORGANISASI & LEADERSHIP */}
-          <section className="space-y-3 border-l-4 border-blue-500 pl-4 py-1">
-            <h2 className="text-xl sm:text-2xl font-bold text-black">
-              Leadership & Outdoor Exploration
+          {/* SECTION 3: HOBI & KETERTARIKAN PERSONAL */}
+          <section className="space-y-4 pt-4 border-t border-zinc-200">
+            <h2 className="text-2xl sm:text-3xl font-bold text-black">
+              ⚡ Beyond Code: Hobbies & Personal Life
             </h2>
-            <p>
-              Beyond coding, active involvement in student organizations like **MAHITALA UNPAR** has significantly built my character. Serving as the Head of Batch 49 taught me resilience, crisis management, strategic planning, and how to lead a cohesive team under demanding situations—lessons that directly influence my software development workflow today.
-            </p>
+            <div className="space-y-3 text-base sm:text-lg text-zinc-800 leading-relaxed font-normal">
+              <p>
+                Di luar aktivitas mengetik kode dan analisis data, saya memiliki berbagai kegiatan untuk menjaga keseimbangan hidup:
+              </p>
+              <ul className="list-disc list-inside space-y-2 pt-1 text-zinc-800">
+                <li>
+                  <span className="font-bold text-black">Kegiatan Luar Ruangan & Organisasi:</span> Aktif dalam kegiatan keorganisasian dan alam terbuka (seperti pengalaman kepemimpinan di MAHITALA UNPAR).
+                </li>
+                <li>
+                  <span className="font-bold text-black">Eksplorasi Teknologi & AI Tools:</span> Suka mencoba produktivitas berbasis AI terbaru dan mengikuti perkembangan model LLM.
+                </li>
+                <li>
+                  <span className="font-bold text-black">[Hobi Lainnya]:</span> [Tambahkan hobi Anda di sini, misalnya: Bermusik, Membaca, Olahraga, Game, atau Otomotif].
+                </li>
+              </ul>
+            </div>
           </section>
 
-          {/* FILOSOFI / CARA KERJA */}
-          <section className="space-y-3 border-l-4 border-blue-500 pl-4 py-1">
-            <h2 className="text-xl sm:text-2xl font-bold text-black">
-              Work Philosophy
+          {/* SECTION 4: PRINSIP / PHILOSOPHY */}
+          <section className="space-y-4 pt-4 border-t border-zinc-200 pb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-black">
+              💡 Personal Mindset
             </h2>
-            <p>
-              I believe in writing clean, maintainable code and building products with high attention to user experience. Levering modern developer tools and AI assistants allows me to iterate fast while keeping focus on architecture quality and business logic.
-            </p>
+            <div className="p-4 bg-zinc-100 border-l-4 border-blue-500 text-zinc-800 italic text-base sm:text-lg">
+              "Continuous learning is key in technology. Every challenge is just an unsolved problem waiting for the right algorithm."
+            </div>
           </section>
+
+          {/* FOOTER NAVIGASI BALIK */}
+          <div className="pt-6 border-t border-zinc-200">
+            <Link
+              to="/#about"
+              state={{ fromMoreAbout: true }}
+              className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-sm"
+            >
+              ← Back to Main Page
+            </Link>
+          </div>
 
         </div>
-
-        {/* BOTTOM NAV / CONTACT FOOTER */}
-        <div className="pt-8 border-t border-zinc-200">
-          <HashLink
-            smooth
-            to="/#about"
-            className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-sm"
-          >
-            ← Back to About Section
-          </HashLink>
-        </div>
-
       </div>
     </div>
   );

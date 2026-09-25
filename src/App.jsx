@@ -283,7 +283,11 @@ function Home() {
                 <span className="text-xl sm:text-2xl font-bold text-black">
                   Ivory Iverson
                 </span>
-                , a 21-year-old Informatics student at Parahyangan Catholic University (UNPAR), based in Bandung with a deep interest in{" "}
+                ,also known as
+                <span className="text-xl sm:text-2xl font-bold text-black">
+                  {" "}Ivory.{" "}
+                </span>
+                I'm a 21-year-old Informatics student at Parahyangan Catholic University (UNPAR), based in Bandung with a deep interest in{" "}
                 <span className="text-lg font-bold text-black">
                   Artificial Intelligence and Machine Learning
                 </span>
@@ -301,7 +305,7 @@ function Home() {
               <div className="pt-2">
                 <Link
                   to="/more-about"
-                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-sm"
+                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-red-50"
                 >
                   Read More About Me →
                 </Link>
