@@ -8,11 +8,10 @@ function Gallery({ items, setIndex, setOpen, index }) {
         <motion.img
           key={item.id}
           whileTap={{ scale: 0.95 }}
-          className={`rounded-xl ${
-            index === i
-              ? "w-[220px]"
-              : "xl:w-[50px] md:w-[30px] sm:w-[20px] w-[14px]"
-          } h-[180px] shrink-0 object-cover transition-[width] ease-in-out duration-300 cursor-pointer`}
+          className={`-xl ${index === i
+            ? "w-[220px]"
+            : "xl:w-[50px] md:w-[30px] sm:w-[20px] w-[14px]"
+            } h-[180px] shrink-0 object-cover transition-[width] ease-in-out duration-300 cursor-pointer`}
           onMouseEnter={() => setIndex(i)}
           onClick={() => {
             setIndex(i);

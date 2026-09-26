@@ -5,7 +5,7 @@ import AccordionGallery from './AccordionGallery';
 // Ganti url dengan path foto kamu sendiri
 const myPhotos = [
   { id: 1, url: '/img/porto1.jpg', title: 'I love flowers' },
-  { id: 2, url: '/img/kacamata.png', title: 'Cool glasses, cool person' },
+  { id: 2, url: '/img/kacamata.jpg', title: 'love going outside' },
   { id: 3, url: '/img/porto2.jpg', title: 'I love black shirt' },
   { id: 4, url: '/img/malay.jpg', title: 'harimau malaya' },
   { id: 5, url: '/img/porto3.jpg', title: 'I love cats' },
