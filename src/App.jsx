@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-do
 import { HashLink } from 'react-router-hash-link';
 import MoreAbout from './MoreAbout';
 import { MorphingText } from './MorphingText';
-import Ferrofluid from './Ferrofluid';
 
 // KOMPONEN FLOATING NAVBAR
 function Navbar() {
@@ -33,29 +32,27 @@ function Navbar() {
 
   return (
     <nav
-      className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ease-out ${
-        showNavbar
+      className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ease-out ${showNavbar
           ? 'opacity-100 translate-y-0 pointer-events-auto'
           : 'opacity-0 -translate-y-4 pointer-events-none'
-      }`}
+        }`}
     >
-      <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider px-4 py-1.5 bg-zinc-50/80 backdrop-blur-md shadow-sm border border-zinc-200/50">
+      <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider px-4 py-1.5 bg-zinc-900/80 backdrop-blur-md shadow-lg border border-zinc-700/50 text-white rounded-full">
         {navItems.map((item, index) => (
           <div key={item.id} className="flex items-center gap-2">
             <HashLink
               smooth
               to={item.href}
               onClick={() => setActiveTab(item.id)}
-              className={`px-3 py-1 transition-all duration-200 ${
-                activeTab === item.id
-                  ? 'bg-blue-500 text-white font-bold'
-                  : 'text-zinc-800 hover:text-black'
-              }`}
+              className={`px-3 py-1 rounded-full transition-all duration-200 ${activeTab === item.id
+                  ? 'bg-blue-600 text-white font-bold shadow-md'
+                  : 'text-zinc-300 hover:text-white'
+                }`}
             >
               {item.label}
             </HashLink>
             {index < navItems.length - 1 && (
-              <span className="text-zinc-400 font-normal">|</span>
+              <span className="text-zinc-600 font-normal">|</span>
             )}
           </div>
         ))}
@@ -84,7 +81,7 @@ function ImageCarousel({ images }) {
         {duplicatedImages.map((src, index) => (
           <div
             key={index}
-            className="w-48 sm:w-60 h-32 sm:h-36 flex-shrink-0 border border-zinc-200 bg-zinc-100/80 backdrop-blur-sm shadow-sm overflow-hidden"
+            className="w-48 sm:w-60 h-32 sm:h-36 flex-shrink-0 border border-zinc-700/60 bg-zinc-900/80 backdrop-blur-sm shadow-lg overflow-hidden rounded-md"
           >
             <img
               src={src}
@@ -118,14 +115,14 @@ function TechCarousel({ items, speed = 20 }) {
         {duplicatedItems.map((item, index) => (
           <div
             key={index}
-            className="flex items-center space-x-3 px-4 py-3 border border-zinc-200 bg-zinc-50/70 backdrop-blur-sm transition-colors shadow-sm flex-shrink-0"
+            className="flex items-center space-x-3 px-4 py-3 border border-zinc-700/60 bg-zinc-900/70 backdrop-blur-sm shadow-md rounded-md flex-shrink-0"
           >
             <img
               src={item.icon}
               alt={item.name}
-              className="w-7 h-7 sm:w-8 sm:h-8 object-contain"
+              className="w-7 h-7 sm:w-8 sm:h-8 object-contain filter brightness-110"
             />
-            <span className="text-sm sm:text-base font-semibold text-zinc-800">
+            <span className="text-sm sm:text-base font-semibold text-zinc-100">
               {item.name}
             </span>
           </div>
@@ -204,9 +201,9 @@ function Home() {
       requestAnimationFrame(() => {
         const element = document.getElementById(targetId);
         if (element) {
-          element.scrollIntoView({ 
-            behavior: isFromMoreAbout ? 'instant' : 'smooth', 
-            block: 'start' 
+          element.scrollIntoView({
+            behavior: isFromMoreAbout ? 'instant' : 'smooth',
+            block: 'start'
           });
         }
       });
@@ -214,25 +211,10 @@ function Home() {
   }, [location]);
 
   return (
-    <div className="bg-zinc-50 text-slate-900 min-h-screen relative font-sans">
-      
-      {/* 1. BACKGROUND CANVAS FERROFLUID (PERMANEN DI BACKGROUND) */}
-      <div className="fixed inset-0 z-0 pointer-events-none opacity-40">
-        <Ferrofluid 
-          colors={['#3b82f6', '#1d4ed8', '#60a5fa']}
-          speed={0.4}
-          scale={1.5}
-          glow={1.8}
-          mouseInteraction={true}
-        />
-      </div>
+    <div className="bg-white text-zinc-100 min-h-screen relative font-sans selection:bg-blue-500 selection:text-white">
 
-      {/* FLOATING NAVBAR */}
-      <Navbar />
-
-      {/* 2. PEMBUNGKUS BACKGROUND GRID & KONTEN (LAYER ATAS) */}
-      <div 
-        className="relative z-10"
+      {/* BACKGROUND GRID */}
+      <div
         style={{
           backgroundImage: `
             linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
@@ -240,325 +222,312 @@ function Home() {
           `,
           backgroundSize: '40px 40px'
         }}
+        className="min-h-screen py-12 px-6 sm:px-12 md:px-16"
       >
-        
-        {/* HERO ANIMATED SECTION */}
-        <div ref={containerRef} className="h-[300vh] relative">
-          <div className="sticky top-0 h-screen flex flex-col items-center justify-center p-4 sm:p-6 text-center overflow-hidden">
-            <div className="grid place-items-center max-w-4xl w-full px-2">
-              
-              <motion.div 
-                style={{ opacity: firstBlockOpacity, y: firstBlockY, pointerEvents: firstBlockPointer }}
-                className="col-start-1 row-start-1 flex flex-col items-center space-y-2 sm:space-y-4 w-full"
-              >
-                <h2 className="text-2xl sm:text-7xl md:text-5xl font-extrabold tracking-tight text-black">
-                  Hello, World!
-                </h2>
-                <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-center">
-                  <span className="text-2xl sm:text-4xl md:text-5xl text-black">I'm</span><span> </span>
-                  <span className="bg-blue-500 text-4xl sm:text-6xl md:text-7xl text-white block sm:inline mt-1 sm:mt-0 px-2">Ivory Iverson</span>
-                </h1>
-              </motion.div>
 
-              <motion.div 
-                style={{ opacity: secondBlockOpacity, y: secondBlockY, pointerEvents: secondBlockPointer }}
-                className="col-start-1 row-start-1 flex items-center justify-center w-full"
-              >
-                <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-center">
-                  <span className="text-2xl sm:text-4xl md:text-5xl text-black">I'm an</span><span> </span>
-                  <span className="bg-blue-500 text-4xl sm:text-6xl md:text-7xl text-white block sm:inline my-1 sm:my-0 px-2">Informatics</span><span> </span>
-                  <span className="text-2xl sm:text-4xl md:text-5xl text-black">student</span>
-                </h1>
-              </motion.div>
+        {/* FLOATING NAVBAR */}
+        <Navbar />
 
-              <motion.div 
-                style={{ opacity: thirdBlockOpacity, y: thirdBlockY }}
-                className="col-start-1 row-start-1 flex flex-col items-center justify-center w-full"
-              >
-                <h1 className="text-3xl bg-blue-500 sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white text-center px-3 py-1">
-                  Let's explore my work ! 
-                </h1>
-              </motion.div>
+        {/* LAYER KONTEN UTAMA */}
+        <div className="relative z-10">
 
-            </div>
-          </div>
-        </div>
+          {/* HERO ANIMATED SECTION */}
+          <div ref={containerRef} className="h-[300vh] relative">
+            <div className="sticky top-0 h-screen flex flex-col items-center justify-center p-4 sm:p-6 text-center overflow-hidden">
+              <div className="grid place-items-center max-w-4xl w-full px-2">
 
-        {/* SECTION 2: ABOUT ME */}
-        <section id="about" className="px-6 sm:px-12 md:px-16 pt-24 pb-4">
-          <div className="max-w-3xl mx-auto flex flex-col items-start justify-start space-y-6 text-left">
-            <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit px-3 py-1">
-              About Me
-            </h2>
-            
-            <div className="space-y-4 text-base sm:text-lg text-zinc-800 leading-relaxed font-normal">
-              <p>
-                Hi, I'm{" "}
-                <span className="text-xl sm:text-2xl font-bold text-black">
-                  Ivory Iverson
-                </span>
-                , also known as
-                <span className="text-xl sm:text-2xl font-bold text-black">
-                  {" "}Ivory.{" "}
-                </span>
-                I'm a 21-year-old Informatics student at Parahyangan Catholic University (UNPAR), based in Bandung with a deep interest in{" "}
-                <span className="text-lg font-bold text-black">
-                  Artificial Intelligence and Machine Learning
-                </span>
-                .
-              </p>
-
-              <p>
-                Alongside my interest on AI, I have hands-on experience in{" "}
-                <span className="text-lg font-bold text-black">
-                  Web Development and Information Systems
-                </span>
-                {" "}building scalable, functional, and user-friendly web applications from the ground up.
-              </p>
-
-              <div className="pt-2">
-                <Link
-                  to="/more-about"
-                  className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-sm"
+                <motion.div
+                  style={{ opacity: firstBlockOpacity, y: firstBlockY, pointerEvents: firstBlockPointer }}
+                  className="col-start-1 row-start-1 flex flex-col items-center space-y-2 sm:space-y-4 w-full"
                 >
-                  Read More About Me →
-                </Link>
+                  <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-900 drop-shadow-sm">
+                    Hello, World!
+                  </h2>
+                  <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-center">
+                    <span className="text-2xl sm:text-4xl md:text-5xl text-zinc-800">I'm</span><span> </span>
+                    <span className="bg-blue-600 text-4xl sm:text-6xl md:text-7xl text-white block sm:inline mt-1 sm:mt-0 px-3 py-1 rounded shadow-lg">Ivory Iverson</span>
+                  </h1>
+                </motion.div>
+
+                <motion.div
+                  style={{ opacity: secondBlockOpacity, y: secondBlockY, pointerEvents: secondBlockPointer }}
+                  className="col-start-1 row-start-1 flex items-center justify-center w-full"
+                >
+                  <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight text-center">
+                    <span className="text-2xl sm:text-4xl md:text-5xl text-zinc-800">I'm an</span><span> </span>
+                    <span className="bg-blue-600 text-4xl sm:text-6xl md:text-7xl text-white block sm:inline my-1 sm:my-0 px-3 py-1 rounded shadow-lg">Informatics</span><span> </span>
+                    <span className="text-2xl sm:text-4xl md:text-5xl text-zinc-800">student</span>
+                  </h1>
+                </motion.div>
+
+                <motion.div
+                  style={{ opacity: thirdBlockOpacity, y: thirdBlockY }}
+                  className="col-start-1 row-start-1 flex flex-col items-center justify-center w-full"
+                >
+                  <h1 className="text-3xl bg-blue-600 sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white text-center px-4 py-2 rounded shadow-xl">
+                    Let's explore my work !
+                  </h1>
+                </motion.div>
+
               </div>
             </div>
           </div>
-        </section>
 
-        {/* SECTION 3: MY EXPERIENCES */}
-        <section id="experiences" className="px-6 sm:px-12 md:px-16 py-16 border-t border-zinc-200/60">
-          <div className="max-w-3xl mx-auto flex flex-col items-start space-y-10 text-left">
-            <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit text-right px-3 py-1">
-              My Experiences
-            </h2>
-
-            {/* ITEM PENGALAMAN 1 */}
-            <div className="flex flex-col space-y-4 w-full">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-1">
-                <h3 className="text-xl bg-blue-500 sm:text-2xl font-bold text-white w-fit px-2 py-0.5">
-                  Full-Stack Developer
-                </h3>
-                <span className="text-sm font-semibold text-zinc-600">
-                  2026 – Present
-                </span>
-              </div>
-
-              <p className="text-base font-bold text-zinc-900">
-                Keuskupan Bandung (Diocese of Bandung)
-              </p>
-
-              <ul className="list-disc list-inside text-base text-zinc-800 leading-relaxed space-y-2">
-                <li>
-                  Architected and developed a full-stack web application for the Diocese of Bandung using an <span className="font-bold text-black">Agile development process</span>.
-                </li>
-                <li>
-                  Built core features including <span className="font-bold text-black">schedule management</span>, <span className="font-bold text-black">online registration systems</span>, and <span className="font-bold text-black">digital record-keeping</span> to streamline administrative workflows.
-                </li>
-                <li>
-                  Engineered both front-end user interfaces and back-end database structures to deliver a seamless, responsive experience for end-users and administrators.
-                </li>
-              </ul>
-
-              <div className="flex flex-wrap gap-2 pt-2">
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
-                  Full-Stack Development
-                </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
-                  Agile / Scrum
-                </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
-                  Bootstrap
-                </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
-                  Python
-                </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
-                  XML
-                </span>
-              </div>
-
-              <ImageCarousel images={keuskupanImages} />
-            </div>
-
-            {/* ITEM PENGALAMAN 2 */}
-            <div className="flex flex-col space-y-4 w-full pt-8 border-t border-zinc-200/60">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-1">
-                <h3 className="text-xl sm:text-2xl bg-blue-500 font-bold text-white w-fit px-2 py-0.5">
-                  Head of Batch 49 (Ketua Angkatan)
-                </h3>
-                <span className="text-sm font-semibold text-zinc-600">
-                  2025
-                </span>
-              </div>
-
-              <p className="text-base font-bold text-zinc-900">
-                MAHITALA UNPAR
-              </p>
-
-              <ul className="list-disc list-inside text-base text-zinc-800 leading-relaxed space-y-2">
-                <li>
-                  Led and coordinated members of <span className="font-bold text-black">Batch 49</span>, serving as the primary bridge between batch members, senior organization officials, and university stakeholders.
-                </li>
-                <li>
-                  Managed team communication, conflict resolution, and internal alignment during high-intensity organizational projects and outdoor expeditions.
-                </li>
-                <li>
-                  Organized batch-level initiatives and training programs, fostering solidarity, discipline, and strong risk management practices within the team.
-                </li>
-              </ul>
-
-              <div className="flex flex-wrap gap-2 pt-2">
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
-                  Leadership
-                </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
-                  Team Management
-                </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
-                  Conflict Resolution
-                </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
-                  Strategic Communication
-                </span>
-              </div>
-
-              <ImageCarousel images={mahitalaImages} />
-            </div>
-
-            {/* ITEM PENGALAMAN 3 */}
-            <div className="flex flex-col space-y-4 w-full pt-8 border-t border-zinc-200/60">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-1">
-                <h3 className="text-xl sm:text-2xl bg-blue-500 font-bold text-white w-fit px-2 py-0.5">
-                  Coding Mentor & Volunteer
-                </h3>
-                <span className="text-sm font-semibold text-zinc-600">
-                  2023
-                </span>
-              </div>
-
-              <p className="text-base font-bold text-zinc-900">
-                I-CARE 2023 – Himpunan Mahasiswa Informatika UNPAR
-              </p>
-
-              <ul className="list-disc list-inside text-base text-zinc-800 leading-relaxed space-y-2">
-                <li>
-                  Served as a dedicated mentor in a social outreach program organized by the Informatics Student Association (HMIF UNPAR).
-                </li>
-                <li>
-                  Provided hands-on guidance to children at a local orphanage, teaching basic programming and computational thinking concepts using <span className="font-bold text-black">Scratch</span>.
-                </li>
-                <li>
-                  Fostered an engaging and inclusive learning environment to encourage problem-solving and digital literacy among youth.
-                </li>
-              </ul>
-
-              <div className="flex flex-wrap gap-2 pt-2">
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
-                  Mentoring & Teaching
-                </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
-                  Scratch
-                </span>
-                <span className="px-3 py-1 text-xs font-semibold bg-zinc-200/80 text-zinc-900">
-                  Public Service / Volunteering
-                </span>
-              </div>
-
-              <ImageCarousel images={icareImages} />
-            </div>
-
-          </div>
-        </section>
-
-        {/* SECTION 4: TECH STACK & AI TOOLS SECTION */}
-        <section id="skills" className="px-6 sm:px-12 md:px-16 py-10 border-t border-zinc-200/60">
-          <div className="max-w-3xl mx-auto flex flex-col items-start space-y-8 text-left">
-            <div>
-              <h2 className="text-3xl bg-blue-500 sm:text-5xl font-extrabold tracking-tight text-white w-fit px-3 py-1">
-                Skills & Tools
+          {/* SECTION 2: ABOUT ME */}
+          <section id="about" className="pt-24 pb-12">
+            <div className="max-w-3xl mx-auto flex flex-col items-start justify-start space-y-6 text-left p-8 rounded-xl bg-zinc-900/90 backdrop-blur-md border border-zinc-800 shadow-2xl">
+              <h2 className="text-3xl bg-blue-600 sm:text-4xl font-extrabold tracking-tight text-white w-fit px-3 py-1 rounded">
+                About Me
               </h2>
-              <p className="text-zinc-600 text-sm sm:text-base mt-2 font-medium">
-                Technologies, languages, and AI tools I work with regularly.
+
+              <div className="space-y-4 text-base sm:text-lg text-zinc-300 leading-relaxed font-normal">
+                <p>
+                  Hi, I'm{" "}
+                  <span className="text-xl sm:text-2xl font-bold text-white">
+                    Ivory Iverson
+                  </span>
+                  , also known as
+                  <span className="text-xl sm:text-2xl font-bold text-white">
+                    {" "}Ivory.{" "}
+                  </span>
+                  I'm a 21-year-old Informatics student at Parahyangan Catholic University (UNPAR), based in Bandung with a deep interest in{" "}
+                  <span className="text-lg font-bold text-blue-400">
+                    Artificial Intelligence and Machine Learning
+                  </span>
+                  .
+                </p>
+
+                <p>
+                  Alongside my interest on AI, I have hands-on experience in{" "}
+                  <span className="text-lg font-bold text-blue-400">
+                    Web Development and Information Systems
+                  </span>
+                  {" "}building scalable, functional, and user-friendly web applications from the ground up.
+                </p>
+
+                <div className="pt-2">
+                  <Link
+                    to="/more-about"
+                    className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-600 hover:bg-blue-500 px-5 py-2.5 rounded transition-all shadow-md hover:shadow-blue-500/20"
+                  >
+                    Read More About Me →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* SECTION 3: MY EXPERIENCES */}
+          <section id="experiences" className="py-16">
+            <div className="max-w-3xl mx-auto flex flex-col items-start space-y-10 text-left p-8 rounded-xl bg-zinc-900/90 backdrop-blur-md border border-zinc-800 shadow-2xl">
+              <h2 className="text-3xl bg-blue-600 sm:text-4xl font-extrabold tracking-tight text-white w-fit px-3 py-1 rounded">
+                My Experiences
+              </h2>
+
+              {/* ITEM PENGALAMAN 1 */}
+              <div className="flex flex-col space-y-4 w-full">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-1">
+                  <h3 className="text-xl bg-blue-600 sm:text-2xl font-bold text-white w-fit px-2 py-0.5 rounded">
+                    Full-Stack Developer
+                  </h3>
+                  <span className="text-sm font-semibold text-zinc-400">
+                    2026 – Present
+                  </span>
+                </div>
+
+                <p className="text-base font-bold text-zinc-200">
+                  Keuskupan Bandung (Diocese of Bandung)
+                </p>
+
+                <ul className="list-disc list-inside text-base text-zinc-300 leading-relaxed space-y-2">
+                  <li>
+                    Architected and developed a full-stack web application for the Diocese of Bandung using an <span className="font-bold text-white">Agile development process</span>.
+                  </li>
+                  <li>
+                    Built core features including <span className="font-bold text-white">schedule management</span>, <span className="font-bold text-white">online registration systems</span>, and <span className="font-bold text-white">digital record-keeping</span> to streamline administrative workflows.
+                  </li>
+                  <li>
+                    Engineered both front-end user interfaces and back-end database structures to deliver a seamless, responsive experience for end-users and administrators.
+                  </li>
+                </ul>
+
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {["Full-Stack Development", "Agile / Scrum", "Bootstrap", "Python", "XML"].map((tag, i) => (
+                    <span key={i} className="px-3 py-1 text-xs font-semibold bg-zinc-800/80 text-zinc-200 border border-zinc-700/50 rounded">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <ImageCarousel images={keuskupanImages} />
+              </div>
+
+              {/* ITEM PENGALAMAN 2 */}
+              <div className="flex flex-col space-y-4 w-full pt-8 border-t border-zinc-800">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-1">
+                  <h3 className="text-xl sm:text-2xl bg-blue-600 font-bold text-white w-fit px-2 py-0.5 rounded">
+                    Head of Batch 49 (Ketua Angkatan)
+                  </h3>
+                  <span className="text-sm font-semibold text-zinc-400">
+                    2025
+                  </span>
+                </div>
+
+                <p className="text-base font-bold text-zinc-200">
+                  MAHITALA UNPAR
+                </p>
+
+                <ul className="list-disc list-inside text-base text-zinc-300 leading-relaxed space-y-2">
+                  <li>
+                    Led and coordinated members of <span className="font-bold text-white">Batch 49</span>, serving as the primary bridge between batch members, senior organization officials, and university stakeholders.
+                  </li>
+                  <li>
+                    Managed team communication, conflict resolution, and internal alignment during high-intensity organizational projects and outdoor expeditions.
+                  </li>
+                  <li>
+                    Organized batch-level initiatives and training programs, fostering solidarity, discipline, and strong risk management practices within the team.
+                  </li>
+                </ul>
+
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {["Leadership", "Team Management", "Conflict Resolution", "Strategic Communication"].map((tag, i) => (
+                    <span key={i} className="px-3 py-1 text-xs font-semibold bg-zinc-800/80 text-zinc-200 border border-zinc-700/50 rounded">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <ImageCarousel images={mahitalaImages} />
+              </div>
+
+              {/* ITEM PENGALAMAN 3 */}
+              <div className="flex flex-col space-y-4 w-full pt-8 border-t border-zinc-800">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full gap-1">
+                  <h3 className="text-xl sm:text-2xl bg-blue-600 font-bold text-white w-fit px-2 py-0.5 rounded">
+                    Coding Mentor & Volunteer
+                  </h3>
+                  <span className="text-sm font-semibold text-zinc-400">
+                    2023
+                  </span>
+                </div>
+
+                <p className="text-base font-bold text-zinc-200">
+                  I-CARE 2023 – Himpunan Mahasiswa Informatika UNPAR
+                </p>
+
+                <ul className="list-disc list-inside text-base text-zinc-300 leading-relaxed space-y-2">
+                  <li>
+                    Served as a dedicated mentor in a social outreach program organized by the Informatics Student Association (HMIF UNPAR).
+                  </li>
+                  <li>
+                    Provided hands-on guidance to children at a local orphanage, teaching basic programming and computational thinking concepts using <span className="font-bold text-white">Scratch</span>.
+                  </li>
+                  <li>
+                    Fostered an engaging and inclusive learning environment to encourage problem-solving and digital literacy among youth.
+                  </li>
+                </ul>
+
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {["Mentoring & Teaching", "Scratch", "Public Service / Volunteering"].map((tag, i) => (
+                    <span key={i} className="px-3 py-1 text-xs font-semibold bg-zinc-800/80 text-zinc-200 border border-zinc-700/50 rounded">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <ImageCarousel images={icareImages} />
+              </div>
+
+            </div>
+          </section>
+
+          {/* SECTION 4: TECH STACK & AI TOOLS SECTION */}
+          <section id="skills" className="py-10">
+            <div className="max-w-3xl mx-auto flex flex-col items-start space-y-8 text-left p-8 rounded-xl bg-zinc-900/90 backdrop-blur-md border border-zinc-800 shadow-2xl">
+              <div>
+                <h2 className="text-3xl bg-blue-600 sm:text-4xl font-extrabold tracking-tight text-white w-fit px-3 py-1 rounded">
+                  Skills & Tools
+                </h2>
+                <p className="text-zinc-400 text-sm sm:text-base mt-2 font-medium">
+                  Technologies, languages, and AI tools I work with regularly.
+                </p>
+              </div>
+
+              <div className="w-full space-y-6 pt-2">
+                <div className="space-y-3">
+                  <span className="text-xs uppercase tracking-wider bg-blue-600 text-white font-bold inline-block px-2.5 py-0.5 rounded">
+                    Technologies & Languages
+                  </span>
+                  <TechCarousel items={techStack} speed={18} />
+                </div>
+
+                <div className="space-y-3 pt-1">
+                  <span className="text-xs uppercase tracking-wider text-white bg-blue-600 font-bold inline-block px-2.5 py-0.5 rounded">
+                    Daily AI Productivity Tools
+                  </span>
+                  <TechCarousel items={aiTools} speed={14} />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* MORPHING TEXT SECTION */}
+          <div className="py-12">
+            <MorphingText
+              words={["DEVELOPER", "INFORMATICS", "AI ENTHUSIAST"]}
+              color="#2563eb"
+              morphDuration={1.2}
+              holdDuration={1.5}
+              blurAmount={12}
+              ease="easeInOut"
+            />
+          </div>
+
+          {/* FOOTER / CONTACT SECTION */}
+          <footer id="contact" className="py-20">
+            <div className="max-w-3xl mx-auto flex flex-col items-start space-y-6 text-left p-8 rounded-xl bg-zinc-900/90 backdrop-blur-md border border-zinc-800 shadow-2xl">
+
+              <span className="text-xs uppercase tracking-widest text-zinc-400 font-bold">
+                Contact
+              </span>
+
+              <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+                Let's build something together.
+              </h2>
+
+              <p className="text-base sm:text-lg text-zinc-300 font-normal max-w-xl">
+                Feel free to reach out!
               </p>
-            </div>
 
-            <div className="w-full space-y-6 pt-2">
-              <div className="space-y-3">
-                <span className="text-xs uppercase tracking-wider bg-blue-500 text-white font-bold inline-block px-2 py-0.5">
-                  Technologies & Languages
-                </span>
-                <TechCarousel items={techStack} speed={18} />
+              <a
+                href="mailto:ivoryiverson03@gmail.com"
+                className="text-xl sm:text-2xl font-bold text-blue-400 underline underline-offset-8 hover:text-blue-300 transition-colors"
+              >
+                ivoryiverson03@gmail.com
+              </a>
+
+              <div className="pt-8 flex flex-col sm:flex-row sm:items-center justify-between w-full border-t border-zinc-800 gap-4 text-sm text-zinc-400">
+                <div className="flex space-x-6 font-semibold">
+                  <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                    GitHub
+                  </a>
+                  <a href="https://www.linkedin.com/in/ivory-iverson-284815393/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                    LinkedIn
+                  </a>
+                  <a href="https://www.instagram.com/ivoryiverson_/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
+                    Instagram
+                  </a>
+                </div>
+
+                <span>© {new Date().getFullYear()} Ivory Iverson. All rights reserved.</span>
               </div>
 
-              <div className="space-y-3 pt-1">
-                <span className="text-xs uppercase tracking-wider text-white bg-blue-500 font-bold inline-block px-2 py-0.5">
-                  Daily AI Productivity Tools
-                </span>
-                <TechCarousel items={aiTools} speed={14} />
-              </div>
             </div>
-          </div>
-        </section>
+          </footer>
 
-        {/* MORPHING TEXT SECTION 
-        <div className="py-12">
-          <MorphingText
-            words={["DEVELOPER", "INFORMATICS", "AI ENTHUSIAST"]}
-            color="#3b82f6"
-            morphDuration={1.2}
-            holdDuration={1.5}
-            blurAmount={12}
-            ease="easeInOut"
-          />
         </div>
-        */}
 
-        {/* FOOTER / CONTACT SECTION */}
-        <footer id="contact" className="px-6 sm:px-12 md:px-16 py-20 border-t border-zinc-200/60">
-          <div className="max-w-3xl mx-auto flex flex-col items-start space-y-6 text-left">
-            
-            <span className="text-xs uppercase tracking-widest text-zinc-500 font-bold">
-              Contact
-            </span>
-
-            <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-black">
-              Let's build something together.
-            </h2>
-
-            <p className="text-base sm:text-lg text-zinc-700 font-normal max-w-xl">
-              Feel free to reach out!
-            </p>
-
-            <a 
-              href="mailto:ivoryiverson03@gmail.com" 
-              className="text-xl sm:text-2xl font-bold text-black underline underline-offset-8 hover:text-blue-600 transition-colors"
-            >
-              ivoryiverson03@gmail.com
-            </a>
-
-            <div className="pt-8 flex flex-col sm:flex-row sm:items-center justify-between w-full border-t border-zinc-200/60 gap-4 text-sm text-zinc-600">
-              <div className="flex space-x-6 font-semibold">
-                <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
-                  GitHub
-                </a>
-                <a href="https://www.linkedin.com/in/ivory-iverson-284815393/" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
-                  LinkedIn
-                </a>
-                <a href="https://www.instagram.com/ivoryiverson_/" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
-                  Instagram
-                </a>
-              </div>
-              
-              <span>© {new Date().getFullYear()} Ivory Iverson. All rights reserved.</span>
-            </div>
-
-          </div>
-        </footer>
-
-      </div> 
+      </div>
 
     </div>
   );
