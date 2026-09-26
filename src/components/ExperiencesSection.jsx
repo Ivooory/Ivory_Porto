@@ -13,9 +13,9 @@ const experiences = [
     ],
     tags: ['Full-Stack Development', 'Agile / Scrum', 'Bootstrap', 'Python', 'XML'],
     images: [
-      '/img/keuskupan-1.jpg',
-      '/img/keuskupan-2.jpg',
-      '/img/keuskupan-3.jpg',
+      '/img/keuskupan-1.png',
+      '/img/keuskupan-2.png',
+      '/img/keuskupan-3.png',
       '/img/keuskupan-4.jpg',
     ],
   },
