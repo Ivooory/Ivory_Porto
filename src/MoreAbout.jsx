@@ -22,16 +22,6 @@ export default function MoreAbout() {
       >
         <div className="max-w-3xl mx-auto space-y-12 text-left">
           
-          {/* TOMBOL KEMBALI */}
-          <div>
-            <Link
-              to="/#about"
-              state={{ fromMoreAbout: true }}
-              className="inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 transition-colors shadow-sm"
-            >
-              ← Back to Main Page
-            </Link>
-          </div>
 
           {/* HEADER SECTION */}
           <div className="space-y-4">
@@ -102,39 +92,6 @@ export default function MoreAbout() {
                 </p>
               </div>
 
-            </div>
-          </section>
-
-          {/* SECTION 3: HOBI & KETERTARIKAN PERSONAL */}
-          <section className="space-y-4 pt-4 border-t border-zinc-200">
-            <h2 className="text-2xl sm:text-3xl font-bold text-black">
-              ⚡ Beyond Code: Hobbies & Personal Life
-            </h2>
-            <div className="space-y-3 text-base sm:text-lg text-zinc-800 leading-relaxed font-normal">
-              <p>
-                Di luar aktivitas mengetik kode dan analisis data, saya memiliki berbagai kegiatan untuk menjaga keseimbangan hidup:
-              </p>
-              <ul className="list-disc list-inside space-y-2 pt-1 text-zinc-800">
-                <li>
-                  <span className="font-bold text-black">Kegiatan Luar Ruangan & Organisasi:</span> Aktif dalam kegiatan keorganisasian dan alam terbuka (seperti pengalaman kepemimpinan di MAHITALA UNPAR).
-                </li>
-                <li>
-                  <span className="font-bold text-black">Eksplorasi Teknologi & AI Tools:</span> Suka mencoba produktivitas berbasis AI terbaru dan mengikuti perkembangan model LLM.
-                </li>
-                <li>
-                  <span className="font-bold text-black">[Hobi Lainnya]:</span> [Tambahkan hobi Anda di sini, misalnya: Bermusik, Membaca, Olahraga, Game, atau Otomotif].
-                </li>
-              </ul>
-            </div>
-          </section>
-
-          {/* SECTION 4: PRINSIP / PHILOSOPHY */}
-          <section className="space-y-4 pt-4 border-t border-zinc-200 pb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-black">
-              💡 Personal Mindset
-            </h2>
-            <div className="p-4 bg-zinc-100 border-l-4 border-blue-500 text-zinc-800 italic text-base sm:text-lg">
-              "Continuous learning is key in technology. Every challenge is just an unsolved problem waiting for the right algorithm."
             </div>
           </section>
 
